@@ -4,17 +4,12 @@
 font-family: "Poppins", sans-serif;
 */
 
-body  {
-    background-color: #0f0f0f;
-}
-
 .cloudkeeper {
     position: absolute;
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
+    height: auto;
 }
 
 .cloudkeeper-header {
@@ -26,7 +21,7 @@ body  {
 
 .cloudkeeper-header img {
     width: 250px;
-    filter: invert(100%);
+    filter: contrast(0%);
     margin-left: -30px;
 }
 
@@ -55,7 +50,6 @@ body  {
     margin-top: -50px;
     text-align: center;
     font-family: "Poppins", sans-serif;
-    font-size: 4rem;
     color: #ffffff;
     font-weight: 525;
 } 
@@ -65,7 +59,6 @@ body  {
     padding-inline: 130px;
     text-align: center;
     font-family: "Poppins", sans-serif;
-    font-size: 1.3rem;
     color: #ccc;
     font-weight: 300;
 }
@@ -92,6 +85,43 @@ body  {
 }
 
 .cloudkeeper-body-buttons button:hover {
-    color: #000;
     background-color: #fff;
+}
+
+.cloudkeeper-body-buttons button:hover a {
+    color: #000;
+}
+
+@media(min-width: 300px) {
+
+    .cloudkeeper {
+        width: 95%;
+    }
+
+    .cloudkeeper-body h1 {
+        font-size: 2.5rem;
+    }
+
+    .cloudkeeper-body h3 {
+        font-size: .9rem;
+        padding-inline: 40px;
+    }
+
+}
+
+@media(min-width: 700px) {
+
+    .cloudkeeper {
+        width: 600px;
+    }
+
+    .cloudkeeper-body h1 {
+        font-size: 3.5rem;
+    }
+
+    .cloudkeeper-body h3 {
+        font-size: 1.3rem;
+        padding-inline: 130px;
+    }
+
 }
