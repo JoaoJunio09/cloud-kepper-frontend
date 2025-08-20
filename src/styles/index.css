@@ -92,7 +92,7 @@ font-family: "Poppins", sans-serif;
     color: #000;
 }
 
-@media(min-width: 300px) {
+@media(min-width: 100px) {
 
     .cloudkeeper {
         width: 95%;
