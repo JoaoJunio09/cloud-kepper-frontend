@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*
+font-family: "Poppins", sans-serif;
+*/
+
+body {
+    background-color: var(--bg-color-body);
+}
+
+.cloudkeeper-login {
+    height: 400px;
+    width: 95%;
+    background-color: var(--bg-color-cloudkeeper-login);
+    border: var(--border-cloudkeeper-login);
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 12px;
+    overflow: hidden;
+}
+
+.cloudkeeper-login h1 {
+    font-family: "Poppins", sans-serif;
+    color: var(--text-color-login);
+    font-weight: 600;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.cloudkeeper-login-form {
+    margin-top: 20px;
+    height: 100%;
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    color: var(--text-color-login);
+}
+
+.form-group input {
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid #797979;
+    outline: none;
+    color: #797979;
+    font-size: 1rem;
+    padding-inline: 5px;
+    background-color: transparent;
+}
+
+.form-group button {
+    height: 40px;
+    border-radius: 20px;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #ffffff20;
+    color: #fff;
+
+    transition: .3s all;
+}
+
+.form-group button:hover {
+    background-color: #ffffffdc;
+    color: #0c0c0c;
+}
+
+.cloudkeeper-acessibility {
+    margin: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+}
+
+.container-alter-theme {
+    background-color: transparent;
+    width: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.slider {
+    display: flex;
+    transform: translateX(0px);
+    transition: .5s ease;
+    cursor: pointer;
+}
+
+.moon {
+    margin-left: 1px;
+}
+
+.cloudkeeper-acessibility img {
+    width: 35px;
+    filter: invert(60%);
+    cursor: pointer;
+}
+
+.box-translator {
+    padding: 10px;
+    height: 100px;
+    width: 300px;
+    background-color: rgb(30, 30, 30);
+    border-radius: 10px;
+    position: absolute;
+    /* right: 145px; */
+    left: 50%;
+    transform: translateX(-50%);
+    top: -100px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+
+    transition: .5s all;
+}
+
+.show-box-translator {
+    top: 30px;
+}
+
+.box-translator img {
+    width: 20px;
+}
+
+.select-language {
+    font-family: "Poppins", sans-serif;
+    font-size: .9rem;
+    display: flex;
+    gap: 10px;
+    color: #ccc;
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    transition: .3s all;
+}
+
+.select-language.select {
+    background-color: rgb(23, 3, 137);
+}
+
+.select-language:hover {
+    background-color: rgb(21, 21, 21);
+}
+
+@media (min-width: 500px) {
+
+    .cloudkeeper-login {
+        top: 50%;
+        width: 400px;
+        padding: 30px 40px;
+    }
+
+}
+
+@media (min-width: 600px) {
+
+    .cloudkeeper-acessibility {
+        margin: 40px 50px;
+    }
+
+}
