@@ -10,12 +10,20 @@ const buttonsSelectLanguage = document.querySelectorAll(".select-language");
 let count = 1;
 let theme = "";
 
+document.addEventListener('DOMContentLoaded', () => {
+	if (localStorage.getItem('theme') == "theme-dark") {
+		slider.style.transform = "translateX(0px)";
+	}
+	else {
+		slider.style.transform = "translateX(-30px)";
+		count = 2;
+	}
+});
+
 container.addEventListener('click', () => {
 	count++;
 	updateSliderTheme();
-
-	document.documentElement.className = theme;
-	localStorage.setItem("theme", theme);
+	setTheme();
 });
 
 buttonTranslator.addEventListener('click', () => {
@@ -30,11 +38,16 @@ buttonsSelectLanguage.forEach(btn => {
 
 function updateSliderTheme() {
 	if (count % 2 == 0) {
-		slider.style.transform = "translateX(-35px)";
+		slider.style.transform = "translateX(-30px)";
 		theme = "theme-light";
 	}
 	else {
 		slider.style.transform = "translateX(0px)";
 		theme = "theme-dark";
 	}
+}
+
+function setTheme() {
+	document.documentElement.className = theme;
+	localStorage.setItem("theme", theme);
 }
