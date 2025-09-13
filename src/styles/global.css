@@ -18,7 +18,7 @@ a {
 .theme-light {
     --text-color: #000;
     --bg-color-body: #f2f2f2;
-    --bg-color-cloudkeeper-login: linear-gradient(60deg, rgba(8, 8, 8, 0.033), rgba(236, 235, 249, 0.885));
+    --bg-color-cloudkeeper-login: linear-gradient(60deg, rgba(8, 8, 8, 0.033), rgba(253, 253, 255, 0.885));
     --bg-button-login: #0003a2b6;
     --border-color-h1-login: 1px solid rgba(22, 21, 21, 0.212);
     --bg-text-login: #0003a2b6;
@@ -29,8 +29,8 @@ a {
 
 .theme-dark {
     --text-color-login: #ffffffb9;
-    --bg-color-body: #0f0f0f;
-    --bg-color-cloudkeeper-login: linear-gradient(140deg, rgba(255, 255, 255, 0), rgba(5, 1, 57, 0.608));
+    --bg-color-body: #171717;
+    --bg-color-cloudkeeper-login: linear-gradient(140deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.608));
     --bg-button-login: #0003a2b6;
     --border-color-h1-login: 1px solid rgba(255, 255, 255, 0.125);
     --bg-text-login: #0003a2b6;
