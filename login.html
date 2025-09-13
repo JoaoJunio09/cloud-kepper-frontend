@@ -28,11 +28,11 @@
 	</div>
 
 	<div class="box-translator">
-			<div class="select-language select">
+			<div class="select-language select" language="usa">
 				<img src="src/assets/icons/united-states_7081409.png" alt="usa">
 				<p>United States</p>
 			</div>
-			<div class="select-language">
+			<div class="select-language" language="br">
 				<img src="src/assets/icons/brazil_9906449.png" alt="usa">
 				<p>Brasil</p>
 			</div>
@@ -44,21 +44,22 @@
 		<div class="cloudkeeper-login-form">
 			<form class="form">
 				<div class="form-group">
-					<label for="">E-mail</label>
-					<input type="email" placeholder="example@gmail.com">
+					<label for="email" id="email-label">E-mail</label>
+					<input type="email" placeholder="example@gmail.com" id="email">
 				</div>
 				<div class="form-group">
-					<label for="">Password</label>
-					<input type="text" placeholder="******">
+					<label for="password" id="password-label">Password</label>
+					<input type="text" placeholder="******" id="password">
 				</div>
 				<div class="form-group space-form-group-button">
-					<button>Login</button>
+					<button id="btn-login">Login</button>
 				</div>
 			</form>
 		</div>
 	</section>
 	
 	<script type="module" src="src/controller/login/login_acessibility.js" defer></script>
+	<script type="module" src="src/controller/login/login_validation.js" defer></script>
 	<script type="module" src="app.js" defer></script>
 </body>
 </html>

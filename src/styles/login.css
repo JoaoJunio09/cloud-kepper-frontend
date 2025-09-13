@@ -52,6 +52,12 @@ body {
     font-family: "Poppins", sans-serif;
     font-size: 1rem;
     color: var(--text-color-login);
+
+    transition: .3s all;
+}
+
+.show-label-animation {
+    font-size: .7rem;
 }
 
 .form-group input {

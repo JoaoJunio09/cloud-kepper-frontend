@@ -33,8 +33,33 @@ buttonTranslator.addEventListener('click', () => {
 buttonsSelectLanguage.forEach(btn => {
 	btn.addEventListener('click', () => {
 		boxTranslator.classList.toggle("show-box-translator");
+		translate(btn.getAttribute("language"));
 	});
 });
+
+function translate(language) {
+	let h1 = document.querySelector(".cloudkeeper-login h1");
+	let email = document.querySelector("#email-label");
+	let password = document.querySelector("#password-label");
+	let login = document.querySelector("#btn-login");
+
+	switch (language) {
+		case "br":
+			h1.textContent = "Entrar";
+			email.textContent = "Email";
+			password.textContent = "Senha";
+			login.textContent = "Entrar";
+			break;
+		case "usa":
+			h1.textContent = "Login";
+			email.textContent = "E-mail";
+			password.textContent = "Password";
+			login.textContent = "Login";
+			break;
+		default:
+			window.alert("Error translating this page");
+	}
+}
 
 function updateSliderTheme() {
 	if (count % 2 == 0) {
