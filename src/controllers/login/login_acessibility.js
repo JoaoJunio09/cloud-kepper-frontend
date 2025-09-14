@@ -11,11 +11,6 @@ let count = 0;
 let theme = "";
 
 document.addEventListener('DOMContentLoaded', () => {
-	document.documentElement.classList.add("theme-dark");
-	
-	const html = document.documentElement;
-	html.classList.add("theme-dark");
-
 	if (localStorage.getItem('theme') == "theme-dark") {
 		slider.style.transform = "translateX(0px)";
 	}
