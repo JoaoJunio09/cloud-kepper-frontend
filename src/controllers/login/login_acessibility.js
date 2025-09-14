@@ -21,18 +21,21 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	else {
 		slider.style.transform = "translateX(-30px)";
-		count = 2;
+		count = 1;
 	}
 });
 
 window.addEventListener('load', () => {
 	if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {
-		count = 1;
+		count = (localStorage.getItem('theme') == "theme-dark") 
+			? 0 
+			: 1;
 	}
 });
 
 container.addEventListener('click', () => {
 	count++;
+	console.log(count);
 	updateSliderTheme();
 	setTheme();
 });
