@@ -6,6 +6,7 @@ font-family: "Poppins", sans-serif;
 
 body {
     background-color: var(--bg-color-body);
+    overflow: hidden;
 }
 
 .cloudkeeper-login {

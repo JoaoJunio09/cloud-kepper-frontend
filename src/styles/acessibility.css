@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Galada&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*
+font-family: "Galada", cursive;
+font-family: "Poppins", sans-serif;
+font-family: "Roboto", sans-serif;
+*/
+
+.img-acessibility {
+	width: 50px;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	cursor: pointer;
+	filter: var(--filter-invert-img-acessibility);
+}
+
+.acessibility {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: rgba(42, 42, 42, 0.917);
+	position: absolute;
+	bottom: 30px;
+	right: 30px;
+	padding: 15px;
+
+	opacity: 0;
+	pointer-events: none;
+	transition: .5s all;
+}
+
+.show {
+	height: 300px;
+	width: 200px;
+	bottom: 90px;
+	border-radius: 10px;
+	opacity: 1;
+	pointer-events: all;
+}
+
+.option {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.acessibility p {
+	font-family: "Poppins", sans-serif;
+	color: #fff;
+}
+
+.slider-theme {
+	height: 40px;
+	width: 80px;
+	border-radius: 20px;
+	background-color: rgba(15, 15, 15, 0.861);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	position: relative;
+	cursor: pointer;
+}
+
+.slider-theme img {
+	width: 30px;
+}
+
+.theme-select-animation {
+	height: 40px;
+	width: 40px;
+	background-color: #f3f2f21c;
+	position: absolute;
+	border-radius: 50%;
+	left: 0;
+	bottom: 0;
+
+	transition: .3s ease-in-out;
+}
+
+.show-theme-select-animation {
+	left: 40px;
+}
