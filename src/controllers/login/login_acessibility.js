@@ -1,3 +1,5 @@
+import { closeMessageError } from "../../utils/message_error.js";
+
 const container = document.querySelector(".container-alter-theme");
 const slider = document.querySelector(".slider");
 const slider_theme_light = document.querySelector(".slider-theme-1");
@@ -42,6 +44,7 @@ function translate(language) {
 	let email = document.querySelector("#email-label");
 	let password = document.querySelector("#password-label");
 	let login = document.querySelector("#btn-login");
+	let h1MessageError = document.querySelector(".message-error h1");
 
 	switch (language) {
 		case "br":
@@ -49,16 +52,22 @@ function translate(language) {
 			email.textContent = "Email";
 			password.textContent = "Senha";
 			login.textContent = "Entrar";
+			h1MessageError.textContent = "Desculpe!";
+			localStorage.setItem("translate", "br");
 			break;
 		case "usa":
 			h1.textContent = "Login";
 			email.textContent = "E-mail";
 			password.textContent = "Password";
 			login.textContent = "Login";
+			h1MessageError.textContent = "Sorry!";
+			localStorage.setItem("translate", "usa");
 			break;
 		default:
 			window.alert("Error translating this page");
 	}
+
+	closeMessageError();
 }
 
 function updateSliderTheme() {

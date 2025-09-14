@@ -18,7 +18,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 20px 15px;
+    padding: 25px 25px;
     overflow: hidden;
 }
 
@@ -93,7 +93,7 @@ body {
 }
 
 .space-form-group-button {
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
 .cloudkeeper-acessibility {

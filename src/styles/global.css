@@ -4,6 +4,23 @@
 font-family: "Poppins", sans-serif;
 */
 
+.fade {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #0000007c;
+    z-index: 100;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s ease;
+}
+
+.show-fade {
+    opacity: 1;
+    pointer-events: all;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -25,16 +42,21 @@ a {
     --bg-h1-login: #000;
     --bg-color-input-login: transparent;
     --text-color-input-login: #000000;
+    --bg-color-message-error: #fff;
+    --text-color-message-error: #d50000;
 }
 
 .theme-dark {
     --text-color-login: #ffffffb9;
-    --bg-color-body: #171717;
-    --bg-color-cloudkeeper-login: linear-gradient(140deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.608));
+    --bg-color-body: #1f1f1f;
+    --bg-color-cloudkeeper-login: linear-gradient(140deg, rgba(255, 255, 255, 0.034), rgba(0, 0, 0, 0.608));
     --bg-button-login: #0003a2b6;
     --border-color-h1-login: 1px solid rgba(255, 255, 255, 0.125);
     --bg-text-login: #0003a2b6;
     --bg-h1-login: #fff;
     --bg-color-input-login: #00000034;
     --text-color-input-login: #aeaeae;
+    --bg-color-message-error: rgba(255, 255, 255, 0.036);
+    --text-color: #fff;
+    --text-color-message-error: #fa4444;
 }

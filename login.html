@@ -5,10 +5,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="src/styles/login.css">
 	<link rel="stylesheet" href="src/styles/global.css">
+	<link rel="stylesheet" href="src/styles/message_error.css">
+	<link rel="stylesheet" href="src/styles/message_success.css">
 	<link rel="shortcut icon" href="src/assets/images/ChatGPT Image 9 de ago. de 2025, 16_28_54.png" type="image/x-icon">
 	<title>CloudKeeper | Login</title>
 </head>
 <body>
+
+	<div class="fade"></div>
 
 	<div class="cloudkeeper-acessibility">
 		<div class="container-alter-theme">
@@ -51,15 +55,30 @@
 					<label for="password" id="password-label">Password</label>
 					<input type="text" placeholder="******" id="password">
 				</div>
-				<div class="form-group space-form-group-button">
-					<button id="btn-login">Login</button>
-				</div>
 			</form>
+			<div class="form-group space-form-group-button">
+				<button id="btn-login">Login</button>
+			</div>
 		</div>
 	</section>
+
+	<div class="message-success">
+		<img src="src/assets/icons/check_10015332.png" alt="">
+		<h1>Conectado com sucesso!</h1>
+		<button>Continuar</button>
+
+		<div class="loading"></div>
+	</div>
+
+	<div class="message-error">
+		<img src="src/assets/icons/letter-x_9972749.png" alt="fechar" id="btn-close-message-error">
+		<h1>Sorry!</h1>
+		<p id="message-error-text">Preencha o e-mail</p>
+	</div>
 	
-	<script type="module" src="src/controller/login/login_acessibility.js" defer></script>
-	<script type="module" src="src/controller/login/login_validation.js" defer></script>
+	<script type="module" src="src/controllers/login/login_acessibility.js" defer></script>
+	<script type="module" src="src/controllers/login/login_validation.js" defer></script>
+	<script type="module" src="src/utils/message_error.js" defer></script>
 	<script type="module" src="app.js" defer></script>
 </body>
 </html>
