@@ -9,8 +9,8 @@ font-family: "Roboto", sans-serif;
 .img-acessibility {
 	width: 50px;
 	position: fixed;
-	bottom: 30px;
-	right: 30px;
+	bottom: 50px;
+	right: 50px;
 	cursor: pointer;
 	filter: var(--filter-invert-img-acessibility);
 }
@@ -21,8 +21,8 @@ font-family: "Roboto", sans-serif;
 	border-radius: 50%;
 	background-color: rgba(42, 42, 42, 0.917);
 	position: absolute;
-	bottom: 30px;
-	right: 30px;
+	bottom: 50px;
+	right: 50px;
 	padding: 15px;
 
 	opacity: 0;
@@ -33,7 +33,7 @@ font-family: "Roboto", sans-serif;
 .show {
 	height: 300px;
 	width: 200px;
-	bottom: 90px;
+	bottom: 110px;
 	border-radius: 10px;
 	opacity: 1;
 	pointer-events: all;
