@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('load', () => {
 	if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {
-		count = 0;
+		count = 1;
 	}
 });
 
