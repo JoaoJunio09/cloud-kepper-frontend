@@ -11,6 +11,11 @@ let count = 0;
 let theme = "";
 
 document.addEventListener('DOMContentLoaded', () => {
+	document.documentElement.classList.add("theme-dark");
+	
+	const html = document.documentElement;
+	html.classList.add("theme-dark");
+
 	if (localStorage.getItem('theme') == "theme-dark") {
 		slider.style.transform = "translateX(0px)";
 	}
@@ -75,11 +80,7 @@ function translate(language) {
 }
 
 function updateSliderTheme() {
-	if (count == 0) {
-		slider.style.transform = "translateX(0px)";
-		theme = "theme-dark";
-	}
-	else if (count % 2 == 0) {
+	if (count % 2 == 0) {
 		slider.style.transform = "translateX(0px)";
 		theme = "theme-dark";
 	}
