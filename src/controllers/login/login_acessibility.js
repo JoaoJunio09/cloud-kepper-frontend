@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
 	if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {
 		count = (localStorage.getItem('theme') == "theme-dark") 
-			? 1 
+			? 2 
 			: 0;
 	}
 });
