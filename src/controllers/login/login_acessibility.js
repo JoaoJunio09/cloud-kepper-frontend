@@ -16,13 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	const html = document.documentElement;
 	html.classList.add("theme-dark");
 
-	if (localStorage.getItem('theme') == "theme-dark") {
-		slider.style.transform = "translateX(0px)";
-	}
-	else {
-		slider.style.transform = "translateX(-30px)";
-		count = 1;
-	}
+	slider.style.transform = "translateX(0px)";
+	// if (localStorage.getItem('theme') == "theme-dark") {
+	// 	slider.style.transform = "translateX(0px)";
+	// }
+	// else {
+	// 	slider.style.transform = "translateX(-30px)";
+	// 	count = 1;
+	// }
 });
 
 window.addEventListener('load', () => {
