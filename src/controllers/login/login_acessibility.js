@@ -2,8 +2,6 @@ import { closeMessageError } from "../../utils/message_error.js";
 
 const container = document.querySelector(".container-alter-theme");
 const slider = document.querySelector(".slider");
-const slider_theme_light = document.querySelector(".slider-theme-1");
-const slider_theme_dark = document.querySelector(".slider-theme-2");
 
 const buttonTranslator = document.querySelector("#btn-translator");
 const boxTranslator = document.querySelector(".box-translator");
@@ -13,6 +11,7 @@ let count = 1;
 let theme = "";
 
 document.addEventListener('DOMContentLoaded', () => {
+	localStorage.setItem('theme', 'theme-dark');
 	if (localStorage.getItem('theme') == "theme-dark") {
 		slider.style.transform = "translateX(0px)";
 	}
