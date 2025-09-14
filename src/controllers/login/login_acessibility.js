@@ -7,17 +7,22 @@ const buttonTranslator = document.querySelector("#btn-translator");
 const boxTranslator = document.querySelector(".box-translator");
 const buttonsSelectLanguage = document.querySelectorAll(".select-language");
 
-let count = 1;
+let count = 0;
 let theme = "";
 
 document.addEventListener('DOMContentLoaded', () => {
-	localStorage.setItem('theme', 'theme-dark');
 	if (localStorage.getItem('theme') == "theme-dark") {
 		slider.style.transform = "translateX(0px)";
 	}
 	else {
 		slider.style.transform = "translateX(-30px)";
 		count = 2;
+	}
+});
+
+window.addEventListener('load', () => {
+	if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {
+		count = 0;
 	}
 });
 
@@ -70,13 +75,17 @@ function translate(language) {
 }
 
 function updateSliderTheme() {
-	if (count % 2 == 0) {
-		slider.style.transform = "translateX(-30px)";
-		theme = "theme-light";
-	}
-	else {
+	if (count == 0) {
 		slider.style.transform = "translateX(0px)";
 		theme = "theme-dark";
+	}
+	else if (count % 2 == 0) {
+		slider.style.transform = "translateX(0px)";
+		theme = "theme-dark";
+	}
+	else {
+		slider.style.transform = "translateX(-30px)";
+		theme = "theme-light";
 	}
 }
 

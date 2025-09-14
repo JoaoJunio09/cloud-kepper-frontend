@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+	localStorage.setItem('theme', 'theme-dark');
 	const savedTheme = localStorage.getItem('theme');
 
 	if (savedTheme) {
