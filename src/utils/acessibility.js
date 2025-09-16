@@ -49,11 +49,9 @@ function translate(key) {
 
 function changeTheme() {
 	animation_theme_select.classList.toggle("show-theme-select-animation");
-	
+
 	count++;
-	theme = (count % 2 == 0) 
-		? "theme-dark" 
-		: "theme-light";
+	theme = (count % 2 == 0) ? "theme-dark"	: "theme-light";
 	setTheme();
 }
 

@@ -10,3 +10,134 @@ body {
     background-color: var(--bg-color-body);
 }
 
+.cloudkeeper-register {
+    height: 500px;
+    width: 400px;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.227);
+}
+
+.cloudkeeper-register img {
+    width: 100px;
+    position: absolute;
+    top: 0px;
+    
+}
+
+.cloudkeeper-register-body {
+    position: absolute;
+    top: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.cloudkeeper-register-body h1 {
+    font-family: "Roboto", sans-serif;
+    color: var(--text-color);
+    font-weight: 450;
+}
+
+.form-register {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-group-register {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.form-group-register label {
+    font-family: "Poppins", sans-serif;
+    color: #ffffff;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: .9rem;
+    opacity: .6;
+
+    transition: .3s ease;
+    pointer-events: none;
+}
+
+.animation-label {
+    left: 0px;
+    top: -10px;
+    font-size: .8rem;
+    opacity: 1;
+}
+
+.form-group-register input {
+    height: 45px;
+    width: 310px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+    font-size: .9rem;
+    padding-inline: 10px;
+    background-color: #ffffff1d;
+    color: #fff;
+}
+
+.form-group-register input:focus + label,
+.form-group-register input:not(:placeholder-shown) + label {
+    left: 10px;
+    top: 1px;
+    font-size: .8rem;
+    opacity: 1;
+}
+
+.form-group-register-button button {
+    margin-top: 5px;
+    background-color: rgb(55, 2, 179);
+    width: 310px;
+    height: 45px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: .8rem;
+    border: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+
+    transition: .3s all;
+}
+
+.form-group-register-button button:hover {
+    background-color: transparent;
+    border: 1px solid rgb(55, 2, 179);
+    color: rgb(55, 2, 179);
+}
+
+.p-exists-account {
+    font-family: "Poppins", sans-serif;
+    font-size: .8rem;
+    margin-top: 15px;
+    color: #fff;
+}
+
+.p-exists-account a {
+    color: rgb(0, 187, 255);
+    text-decoration: underline;
+    cursor: pointer;
+}
