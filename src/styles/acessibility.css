@@ -9,8 +9,8 @@ font-family: "Roboto", sans-serif;
 .img-acessibility {
 	width: 50px;
 	position: fixed;
-	bottom: 50px;
-	right: 50px;
+	bottom: 20px;
+	right: 20px;
 	cursor: pointer;
 	filter: var(--filter-invert-img-acessibility);
 }
@@ -36,7 +36,8 @@ font-family: "Roboto", sans-serif;
 .show {
 	height: 300px;
 	width: 200px;
-	bottom: 110px;
+	bottom: 80px;
+	right: 20px;
 	border-radius: 10px;
 	opacity: 1;
 	pointer-events: all;

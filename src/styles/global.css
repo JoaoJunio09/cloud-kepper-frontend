@@ -45,6 +45,8 @@ a {
     --bg-color-message-error: #fff;
     --text-color-message-error: #d50000;
     --filter-invert-img-acessibility: invert(0%);
+    --bg-color-input-register: transparent; 
+    --box-shadow-input-register: 0px 0px 5px rgba(0, 0, 0, 0.114); 
 }
 
 .theme-dark {
@@ -61,4 +63,6 @@ a {
     --text-color: #fff;
     --text-color-message-error: #fa4444;
     --filter-invert-img-acessibility: invert(100%);
+    --bg-color-input-register: #ffffff07;
+    --box-shadow-input-register: 0px 0px 30px rgba(0, 0, 0, 0.29); 
 }
