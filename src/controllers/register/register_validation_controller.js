@@ -2,14 +2,7 @@ import { UserService } from "../../services/user_service.js";
 import { closeMessageError, openMessageError } from "../../utils/message_error.js";
 import { openMessageSuccess } from "../../utils/message_success.js";
 
-const inputs = document.querySelectorAll(".form-register input");
 const btnRegister = document.querySelector("#btnRegister");
-
-btnRegister.addEventListener('click', () => {
-	inputs.forEach(input => {
-
-	});
-});
 
 class User {
 	name;
@@ -24,9 +17,16 @@ class User {
 		this.password = password
 	}
 
+	setName(name) { this.name = name; }
 	getName() { return this.name; }
+
+	setSurname(surname) { this.surname = surname; }
 	getSurname() { return this.surname; }
+	
+	setEmail(email) { this.email = email; }
 	getEmail() { return this.email; }
+
+	setPassword(password) { this.password = password }
 	getPassword() { return this.password; }
 }
 
@@ -42,10 +42,10 @@ async function register() {
 		dataValidationForRegister(user);
 		closeMessageError();
 
-		console.log(user);
+		UserService.create(user);
+		openMessageSuccess("Cadastrado com sucesso");
 	}
 	catch (error) {
-		console.log(error);
 		openMessageError(error.message);
 	}
 }
