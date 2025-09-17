@@ -20,7 +20,7 @@ async function create(user) {
 	const response = await fetch(API_BASE_URL_FINDALL, {
 		headers: {
 			'Content-Type': 'application/json',
-			'body': JSON.stringify(user);
+			'body': JSON.stringify(user)
 		},
 		method: 'POST'
 	});
