@@ -4,6 +4,18 @@
 font-family: "Poppins", sans-serif;
 */
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important; /* remove cor */
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: var(--text-color) !important; /* ajusta cor do texto */
+  caret-color: var(--text-color); /* cor do cursor */
+  background-color: transparent !important;
+  transition: background-color 9999s ease-in-out 0s !important;
+}
+
 .fade {
     position: fixed;
     height: 100%;
@@ -47,6 +59,7 @@ a {
     --filter-invert-img-acessibility: invert(0%);
     --bg-color-input-register: transparent; 
     --box-shadow-input-register: 0px 0px 5px rgba(0, 0, 0, 0.114); 
+    --bg-color-warning-password: rgb(237, 237, 237);
 }
 
 .theme-dark {
@@ -65,4 +78,5 @@ a {
     --filter-invert-img-acessibility: invert(100%);
     --bg-color-input-register: #ffffff07;
     --box-shadow-input-register: 0px 0px 30px rgba(0, 0, 0, 0.29); 
+    --bg-color-warning-password: rgb(51, 51, 51);
 }

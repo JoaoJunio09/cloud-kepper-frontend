@@ -62,7 +62,7 @@ function setIdFromUserForStorage(id) {
 }
 
 function displaySucessMessage(message) {
-	openMessageSuccess(message);
+	openMessageSuccess(message,  "../../register.html");
 	redirectsToManager();
 }
 

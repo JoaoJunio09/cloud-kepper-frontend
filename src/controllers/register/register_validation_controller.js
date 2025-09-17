@@ -42,8 +42,8 @@ async function register() {
 		dataValidationForRegister(user);
 		closeMessageError();
 
-		UserService.create(user);
-		openMessageSuccess("Cadastrado com sucesso");
+		
+		openMessageSuccess("Cadastrado com sucesso", "../../../login.html");
 	}
 	catch (error) {
 		openMessageError(error.message);

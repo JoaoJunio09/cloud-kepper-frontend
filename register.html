@@ -14,6 +14,8 @@
 </head>
 <body>
 
+	<div class="fade"></div>
+
 	<section class="cloudkeeper-register">
 		<img src="src/assets/images/ChatGPT Image 9 de ago. de 2025, 16_28_54.png" alt="">
 		<div class="cloudkeeper-register-body">
@@ -32,8 +34,19 @@
 					<label for="email">E-mail</label>
 				</div>
 				<div class="form-group-register">
-					<input type="text" id="password" placeholder=" " required>
+					<input type="password" id="password" placeholder=" " required>
 					<label for="password" data-i18n="password">Password</label>
+					<img src="src/assets/icons/visualizar.png" alt="" class="btnViewPassword">
+					<img src="src/assets/icons/aviso (1).png" alt="" class="btnPasswordWarning">
+
+					<div class="warning-password">
+						<img src="src/assets/icons/perto.png" alt="" class="btnCloseWarningPassword">
+						<h2>Escolha uma senha forte:</h2>
+						<p>- 6 caracteres</p>
+						<p>- 1 letra maiúscula</p>
+						<p>- 1 número</p>
+						<p>- 1 caracter especial</p>
+					</div>
 				</div>
 			</form>
 			<div class="form-group-register-button">
@@ -43,6 +56,33 @@
 		</div>
 	</section>
 	
+	<script>
+		const btnViewPassword = document.querySelector(".btnViewPassword");
+		const password = document.querySelector("#password");
+
+		btnViewPassword.addEventListener('click', () => {
+			if (password.type == "password") {
+				password.type = "text";
+			}
+			else {
+				password.type = "password";
+			}
+		});
+	</script>
+
+	<script>
+		const warning = document.querySelector(".warning-password");
+		const btnWarningPassword = document.querySelector(".btnPasswordWarning");
+		const btnCloseWarningPassword = document.querySelector(".btnCloseWarningPassword");
+
+		btnWarningPassword.addEventListener('click', () => {
+			warning.classList.add("show-warning-password");
+		});
+
+		btnCloseWarningPassword.addEventListener('click', () => {
+			warning.classList.remove("show-warning-password");
+		});	
+	</script>
 
 	<img src="src/assets/icons/universal-access_9288401.png" alt="" class="img-acessibility">
 	<div class="acessibility">
@@ -76,7 +116,7 @@
 
 	<div class="message-success">
 		<img src="src/assets/icons/check_10015332.png" alt="">
-		<h1>Conectado com sucesso!</h1>
+		<h1></h1>
 		<button>Continuar</button>
 
 		<div class="loading"></div>
