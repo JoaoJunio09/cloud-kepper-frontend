@@ -28,7 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 selectLanguages.forEach(selectLanguage => {
-	selectLanguage.addEventListener('click', translatePage(selectLanguage.id));
+	selectLanguage.addEventListener('click', function() {
+		translatePage(selectLanguage.id);
+	});
 });
 
 function translatePage(language) {
