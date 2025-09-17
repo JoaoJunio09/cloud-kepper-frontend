@@ -1,4 +1,5 @@
 import i18n from "../services/language_service.js";
+import { closeMessageError } from "./message_error.js";
 
 const acessibility = document.querySelector(".acessibility");
 const options = document.querySelectorAll(".option");
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 selectLanguages.forEach(selectLanguage => {
 	selectLanguage.addEventListener('click', function() {
 		translatePage(selectLanguage.id);
+		closeMessageError();
 	});
 });
 

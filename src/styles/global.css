@@ -59,7 +59,7 @@ a {
     --bg-h1-login: #fff;
     --bg-color-input-login: #00000034;
     --text-color-input-login: #aeaeae;
-    --bg-color-message-error: rgba(255, 255, 255, 0.036);
+    --bg-color-message-error: rgb(25, 25, 25);
     --text-color: #fff;
     --text-color-message-error: #fa4444;
     --filter-invert-img-acessibility: invert(100%);

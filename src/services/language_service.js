@@ -7,7 +7,8 @@ const i18n = {
 		surname: "Surname",
 		name: "Name",
 		login: "Login",
-		haveAccount: "I have an acoount <a href='login.html'>Login</a"
+		haveAccount: "I have an acoount <a href='login.html'>Login</a",
+		titleMessageError: "Sorry!"
 	},
 	pt: {
 		theme: "Tema",
@@ -17,7 +18,8 @@ const i18n = {
 		surname: "Sobrenome",
 		name: "Nome",
 		login: "Entrar",
-		haveAccount: "Já tenho uma conta <a href='login.html'>Entrar</a"
+		haveAccount: "Já tenho uma conta <a href='login.html'>Entrar</a",
+		titleMessageError: "Desculpe!"
 	}
 };
 

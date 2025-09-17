@@ -14,8 +14,6 @@ export function openMessageError(message) {
 	}
 	else {
 		message_error.classList.add("show-top");
-
-		console.log("show top");
 	}
 
 	btnCloseMessageError.addEventListener('click', () => {
