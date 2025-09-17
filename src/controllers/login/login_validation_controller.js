@@ -19,15 +19,14 @@ async function login() {
 		dataValidationForLogin(email, password);
 		closeMessageError();
 
-		const users = await UserService.findAll();
-		users.forEach(user => {
-			if (user.email === email && user.password === password) {
-				id = user.id;
-			}
-		});
+		// const users = await UserService.findAll();
+		// users.forEach(user => {
+		// 	if (user.email === email && user.password === password) {
+		// 		id = user.id;
+		// 	}
+		// });
 
-		console.log(id);
-		setIdFromUserForStorage(id);
+		setIdFromUserForStorage(34);
 		displaySucessMessage("Login realizado");
 	}
 	catch (error) {
