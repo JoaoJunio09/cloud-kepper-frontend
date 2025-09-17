@@ -129,7 +129,7 @@ body {
 
 .warning-password {
     height: auto;
-    width: 250px;
+    width: 270px;
     border-radius: 10px;
     z-index: 400000;
     background-color: var(--bg-color-warning-password);
