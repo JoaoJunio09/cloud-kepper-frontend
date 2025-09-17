@@ -13,7 +13,6 @@ export function openMessageSuccess(message, location) {
 	loading.classList.add("show-loading");
 	h1.innerHTML = message;
 
-	console.log(message)
 	setTimeout(() => {
 		message_success.classList.remove("show-message-success");
 		fade.classList.remove("show-fade");

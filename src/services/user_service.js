@@ -17,19 +17,21 @@ async function findAll() {
 }
 
 async function create(user) {
-	const response = await fetch(API_BASE_URL_FINDALL, {
+	const response = await fetch(API_BASE_URL_CREATE, {
+		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			'body': JSON.stringify(user)
 		},
-		method: 'POST'
+		body: JSON.stringify(user)
 	});
 
 	if (!response.ok) {
 		throw new Error("Erro ao cadastrar usuário");
 	}
 
-	return await response.json();
+	const data = await response.json();
+	return data;
 }
 
 export const UserService = {

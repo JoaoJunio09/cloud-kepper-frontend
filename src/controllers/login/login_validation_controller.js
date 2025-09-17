@@ -62,7 +62,7 @@ function setIdFromUserForStorage(id) {
 }
 
 function displaySucessMessage(message) {
-	openMessageSuccess(message,  "../../register.html");
+	openMessageSuccess(message,  "../../../manager.html");
 	redirectsToManager();
 }
 
@@ -72,7 +72,7 @@ function displayErrorMessage(message) {
 
 function redirectsToManager() {
 	setInterval(() => {
-		window.location.href = "register.html";
+		window.location.href = "../../../manager.html";
 	}, 6000);
 }
 
