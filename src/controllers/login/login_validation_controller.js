@@ -26,6 +26,7 @@ async function login() {
 			}
 		});
 
+		console.log(id);
 		setIdFromUserForStorage(id);
 		displaySucessMessage("Login realizado");
 	}
@@ -58,7 +59,7 @@ function setIdFromUserForStorage(id) {
 	if (id == null) {
 		throw new Error(message_error_user);
 	}
-	localStorage.setItem("id", id);
+	localStorage.setItem("userId", id);
 }
 
 function displaySucessMessage(message) {

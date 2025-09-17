@@ -5,6 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="src/styles/manager.css">
 	<link rel="stylesheet" href="src/styles/global.css">
+	<link rel="stylesheet" href="src/styles/acessibility.css">
+	<link rel="stylesheet" href="src/styles/message_error.css">
+	<link rel="stylesheet" href="src/styles/message_success.css">
 	<link rel="shortcut icon" href="src/assets/images/ChatGPT Image 9 de ago. de 2025, 16_28_54.png" type="image/x-icon">
 	<title>CloudKeeper | Manager</title>
 </head>
@@ -34,6 +37,41 @@
 
 		</section>
 	</main>
+
+	<img src="src/assets/icons/universal-access_9288401.png" alt="" class="img-acessibility">
+	<div class="acessibility">
+		<div class="option option-1">
+			<p data-i18n="theme">Theme</p>
+			<div class="slider-theme">
+				<div class="theme">
+					<img src="src/assets/icons/darkness_11637644.png" alt="moon" class="moon">
+				</div>
+				<div class="theme">
+					<img src="src/assets/icons/sun_7634185.png" alt="sun" class="sun">
+				</div>
+
+				<div class="theme-select-animation"></div>
+			</div>
+		</div>
+		<div class="option option-2">
+			<p data-i18n="translate">Translate</p>
+			<div class="box-translate">
+				<div class="select-language select" id="en">
+					<img src="src/assets/icons/united-states_7081409.png" alt="">
+					<p>Usa</p>
+				</div>
+				<div class="select-language" id="pt">
+					<img src="src/assets/icons/brazil_9906449.png" alt="">
+					<p>Brasil</p>
+				</div>
+			</div>
+		</div>
+	</div>
 	
+	<script type="module" src="src/controllers/manager/manager_controller.js" defer></script>
+	<script type="module" src="src/utils/acessibility.js" defer></script>
+	<script type="module" src="src/utils/message_error.js" defer></script>
+	<script type="module" src="src/utils/message_success.js" defer></script>
+	<script type="module" src="app.js"></script>
 </body>
 </html>

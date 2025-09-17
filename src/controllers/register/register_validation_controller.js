@@ -64,7 +64,6 @@ async function register() {
 		redirectsToLogin();
 	}
 	catch (error) {
-		console.log(error);
 		openMessageError(error.message);
 	}
 }

@@ -3,6 +3,9 @@
 /*
 font-family: "Poppins", sans-serif;
 */
+body {
+    background-color: var(--bg-color-body-manager);
+}
 
 .main {
     position: fixed;
@@ -13,7 +16,7 @@ font-family: "Poppins", sans-serif;
 
 .menu-bar-vertical {
     width: 100%;
-    border-right: 1px solid #ffffff18;
+    border-right: var(--border-manager);
 }
 
 .management-content {
@@ -25,7 +28,7 @@ font-family: "Poppins", sans-serif;
 }
 
 .menu-bar-vertical-img {
-    border-bottom: 1px solid #ffffff18;
+    border-bottom: var(--border-manager);
     display: flex;
     justify-content: left;
     margin-left: -10px;

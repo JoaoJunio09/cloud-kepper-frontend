@@ -60,6 +60,9 @@ a {
     --bg-color-input-register: transparent; 
     --box-shadow-input-register: 0px 0px 5px rgba(0, 0, 0, 0.114); 
     --bg-color-warning-password: rgb(237, 237, 237);
+
+    --bg-color-body-manager: #f2f2f2;
+    --border-manager: 1px solid #ccc;
 }
 
 .theme-dark {
@@ -79,4 +82,7 @@ a {
     --bg-color-input-register: #ffffff07;
     --box-shadow-input-register: 0px 0px 30px rgba(0, 0, 0, 0.29); 
     --bg-color-warning-password: rgb(51, 51, 51);
+
+    --bg-color-body-manager: #000;
+    --border-manager: 1px solid #ffffff18;
 }
