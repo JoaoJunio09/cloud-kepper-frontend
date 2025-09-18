@@ -7,31 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function fillInUserFiles() {
-	generateStructuredJsonObject(userId);
-}
+	try {
+		const structure = await readJsonFromFolderStructureByUserId(userId);
 
-async function generateStructuredJsonObject(id) {
-	const path = await readJsonFromFolderStructureByUserId(id);
-	
-	fetch(path)
-		.then(response => response.json())
-		.then(data => {
-			console.log(data);
-		})
-		.catch(err => console.log(err));
+		
+	}
+	catch (error) {
 
+	}
 }
 
 async function readJsonFromFolderStructureByUserId(id) {
-	const paths = await FolderStructure.findAll();
-	let folder_structure_path;
-
-	paths.forEach(jsonStructurePath => {
-		if (jsonStructurePath.user.id === id) {
-			folder_structure_path = jsonStructurePath.folderStructurePath;
-		}
-	});
-
-	console.log(folder_structure_path);
-	return folder_structure_path;
+	const jsonObject = await FolderStructure.getFolderStructure(id);
+	return jsonObject.structure;
 }

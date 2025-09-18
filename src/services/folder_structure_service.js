@@ -1,9 +1,11 @@
 const BASE_URL = "http://localhost:8080";
 
 const API_BASE_URL_FINDALL = `${BASE_URL}/api/folderStructure/v1`;
+const API_BASE_URL_GETFOLDERSTRUCTURE = `${BASE_URL}/api/folderStructure/v1/:userId`;
 
-async function findAll() {
-	const response = await fetch(API_BASE_URL_FINDALL, {
+async function getFolderStructure(userId) {
+	const url = API_BASE_URL_GETFOLDERSTRUCTURE.replace(":userId", userId);
+	const response = await fetch(url, {
 		method: 'GET'
 	});
 
@@ -16,5 +18,5 @@ async function findAll() {
 }
 
 export const FolderStructure = {
-	findAll,
+	getFolderStructure,
 }

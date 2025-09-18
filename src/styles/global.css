@@ -63,6 +63,7 @@ a {
 
     --bg-color-body-manager: #f2f2f2;
     --border-manager: 1px solid #ccc;
+    --filter-folder-img: none;
 }
 
 .theme-dark {
@@ -85,4 +86,5 @@ a {
 
     --bg-color-body-manager: #000;
     --border-manager: 1px solid #ffffff18;
+    --filter-folder-img: contrast(0%);
 }

@@ -55,7 +55,7 @@ async function register() {
 
 		if (userSaved == null || userSaved == undefined) {
 			const interval_server_error_message = (localStorage.getItem('lang') === "pt") 
-				? "Não foi possível registrar usuario"
+				? "Não foi possível registrar usuário"
 				: "Unable to register user";
 			openMessageError(interval_server_error_message);
 		}
@@ -104,7 +104,6 @@ function dataValidationForRegister(user) {
 			: "Very weak password";
 			throw new Error(message_error_password);
 	}
-
 }
 
 function redirectsToLogin() {

@@ -48,14 +48,20 @@ body {
 
 .menu-bar-vertical-username h2 {
     font-family: "Poppins", sans-serif;
-    color: #ffffffac;
+    /* color: #ffffffac; */
+    color: var(--text-color);
     font-weight: 300;
     font-size: 1rem;   
 }
 
 .folder-structure {
     padding-top: 20px;
+    padding-bottom: 10px;
     height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    border-bottom: var( --border-manager);
 }
 
 .folder {
@@ -63,9 +69,9 @@ body {
     justify-content: left;
     align-items: center;
     gap: 10px;
-    background-color: #ffffff0c;
     padding: 10px;
     border-radius: 8px;
+    position: relative;
     cursor: pointer;
 
     transition: .3s all;
@@ -78,14 +84,32 @@ body {
 .folder img {
     margin-left: 5px;
     width: 15px;
-    filter: contrast(0%);
-    filter: invert(100%);
+    filter: var(--filter-folder-img);
 }
 
 .folder p {
   font-family: "Poppins", sans-serif;
-  color: #fff;
+  color: var(--text-color);
   font-size: .7rem;   
+}
+
+.btnOpenChildrenForFolder {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    transform: rotate(-90deg);
+}
+
+.btnOpenChildrenForFolder:active {
+    transform: rotate(0deg);
+}
+
+.child {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    padding-inline-start: 6px;
 }
 
 @media(min-width: 1000px) {
