@@ -10,7 +10,7 @@ async function fillInUserFiles() {
 	try {
 		const structure = await readJsonFromFolderStructureByUserId(userId);
 		const folder_structure_html = document.querySelector(".folder-structure");
-
+		console.log(structure.root.children);
 		
 		folder_structure_html.innerHTML = updatesUserFiles(structure.root.children);
 
@@ -38,9 +38,35 @@ function updatesUserFiles(list) {
 }
 
 function createElementHTMLFile(child) {
+
+	let imgFileType = "";
+
+	switch (child.fileType) {
+		case "image/png": 
+			imgFileType = "<img src='src/assets/icons/png.png' alt='file-type'>";
+			break;
+		case "image/jpg":
+			imgFileType = "<img src='src/assets/icons/pjg.png' alt='file-type'>";
+			break;
+		case "image/jpeg":
+			imgFileType = "<img src='src/assets/icons/pjg.png' alt='file-type'>";
+			break;
+		case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+			imgFileType = "<img src='src/assets/icons/doc.png' alt='file-type'>";
+			break;
+		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+			imgFileType = "<img src='src/assets/icons/doc.png' alt='file-type'>";
+			break;
+		case "application/pdf":
+			imgFileType = "<img src='src/assets/icons/pdf.png' alt='file-type'>";
+			break;
+		default:
+			imgFileType = "<img src='src/assets/icons/arquivo (1).png' alt='file-type'>";
+	}
+
 	return `
 		<div class="file">
-			<img src="src/assets/icons/pdf.png" alt="">
+			${imgFileType}
 			<p>${child.name}</p>
 		</div>
 	`;
