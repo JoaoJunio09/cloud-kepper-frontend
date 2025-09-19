@@ -64,7 +64,7 @@ body {
     border-bottom: var( --border-manager);
 }
 
-.folder {
+.folder, .file {
     display: flex;
     justify-content: left;
     align-items: center;
@@ -77,17 +77,20 @@ body {
     transition: .3s all;
 }
 
-.folder:hover {
+.folder:hover, .file:hover {
     background-color: #ffffff18;
 }
 
-.folder img {
+.folder img, .file img {
     margin-left: 5px;
     width: 15px;
+}
+
+.folder img {
     filter: var(--filter-folder-img);
 }
 
-.folder p {
+.folder, .file p {
   font-family: "Poppins", sans-serif;
   color: var(--text-color);
   font-size: .7rem;   
@@ -95,9 +98,6 @@ body {
 
 .btnOpenChildrenForFolder {
     cursor: pointer;
-    position: absolute;
-    right: 10px;
-    top: 12px;
     transform: rotate(-90deg);
 }
 
@@ -106,10 +106,14 @@ body {
 }
 
 .child {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 0px;
     padding-inline-start: 6px;
+}
+
+.show-child {
+    display: flex;
 }
 
 @media(min-width: 1000px) {
