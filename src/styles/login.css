@@ -5,7 +5,7 @@ font-family: "Poppins", sans-serif;
 */
 
 body {
-    background-color: var(--bg-color-body);
+    background-color: var(--bg-color-body-login-and-register);
     overflow: hidden;
 }
 

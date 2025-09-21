@@ -2,15 +2,11 @@ import { FolderStructure } from "../../services/folder_structure_service.js";
 
 const userId = Number.parseInt(localStorage.getItem('userId'));
 
-document.addEventListener('DOMContentLoaded', () => {
-	fillInUserFiles();	
-});
-
 async function fillInUserFiles() {
 	try {
 		const structure = await readJsonFromFolderStructureByUserId(userId);
 		const folder_structure_html = document.querySelector(".folder-structure");
-		console.log(structure.root.children);
+		const table = document.querySelector(".table");
 		
 		folder_structure_html.innerHTML = updatesUserFiles(structure.root.children);
 
@@ -40,6 +36,7 @@ function updatesUserFiles(list) {
 function createElementHTMLFile(child) {
 
 	let imgFileType = "";
+	let fileId = child.fileId;
 
 	switch (child.fileType) {
 		case "image/png": 
@@ -61,11 +58,11 @@ function createElementHTMLFile(child) {
 			imgFileType = "<img src='src/assets/icons/pdf.png' alt='file-type'>";
 			break;
 		default:
-			imgFileType = "<img src='src/assets/icons/arquivo (1).png' alt='file-type'>";
+			imgFileType = "<img src='src/assets/icons/arquivo (1).png' alt='file-type' class='file-default'>";
 	}
 
 	return `
-		<div class="file">
+		<div class="file" fileId=${fileId}>
 			${imgFileType}
 			<p>${child.name}</p>
 		</div>
@@ -118,3 +115,23 @@ function attachEventsToFolderButtons() {
 				})
     });
 }
+
+function openFile(fileId) {
+	try {
+		console.log(fileId);
+	}
+	catch (error) {
+		console.log(error);
+	}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+	fillInUserFiles();
+});
+
+document.addEventListener('click', (e) => {
+	const file = e.target.closest(".file");
+	if (file) {
+		openFile(file.getAttribute("fileId"));
+	}
+})

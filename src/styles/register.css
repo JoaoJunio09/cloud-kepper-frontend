@@ -7,7 +7,7 @@ font-family: "Roboto", sans-serif;
 */
 
 body {
-    background-color: var(--bg-color-body);
+    background-color: var(--bg-color-body-login-and-register);
 }
 
 .cloudkeeper-register {

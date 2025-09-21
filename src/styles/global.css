@@ -46,7 +46,8 @@ a {
 
 .theme-light {
     --text-color: #000;
-    --bg-color-body: #f2f2f2;
+    --bg-color-body-login-and-register: #f2f2f2;
+    --bg-color-body-manager: #f2f2f2;
     --bg-color-cloudkeeper-login: linear-gradient(60deg, rgba(8, 8, 8, 0.033), rgba(253, 253, 255, 0.885));
     --bg-button-login: #0003a2b6;
     --border-color-h1-login: 1px solid rgba(22, 21, 21, 0.212);
@@ -64,11 +65,17 @@ a {
     --bg-color-body-manager: #f2f2f2;
     --border-manager: 1px solid #ccc;
     --filter-folder-img: none;
+    --bg-color-button-option: #071fa8;
+    --text-color-hover-button-option: #000;
+    --text-color-table: #000000c9;
+    --text-color-name-file: #000000;
+    --border-tbody-tr-table: #2a2a2a1d;
 }
 
 .theme-dark {
     --text-color-login: #ffffffb9;
-    --bg-color-body: #1f1f1f;
+    --bg-color-body-login-and-register: #1f1f1f;
+    --bg-color-body-manager: #020114;
     --bg-color-cloudkeeper-login: linear-gradient(140deg, rgba(255, 255, 255, 0.034), rgba(0, 0, 0, 0.608));
     --bg-button-login: #0003a2b6;
     --border-color-h1-login: 1px solid rgba(255, 255, 255, 0.125);
@@ -87,4 +94,9 @@ a {
     --bg-color-body-manager: #000;
     --border-manager: 1px solid #ffffff18;
     --filter-folder-img: contrast(0%);
+    --bg-color-button-option: #151515;
+    --text-color-hover-button-option: #fff;
+    --text-color-table: #ffffffc2;
+    --text-color-name-file: #ffffff;
+    --border-tbody-tr-table: #ffffff0c;
 }

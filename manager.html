@@ -12,7 +12,7 @@
 	<link rel="shortcut icon" href="src/assets/images/ChatGPT Image 9 de ago. de 2025, 16_28_54.png" type="image/x-icon">
 	<title>CloudKeeper | Manager</title>
 </head>
-<body>
+<body class="body">
 
 	<main class="main">
 		<section class="menu-bar-vertical">
@@ -26,8 +26,65 @@
 				</div>
 			</div>
 		</section>
-		<section class="management-content">
+		<section class="management-content management-content-desktop">
+			<div class="box-button-to-go-back">
+				<img src="src/assets/icons/back.png" alt="">
+				<h2>Home</h2>
+			</div>
 
+			<div class="management-content-header">
+				<h1>Meus arquivos</h1>
+
+				<div class="management-content-header-options">
+					<button>Upload</button>
+					<button>New Folder</button>
+					<button>Delete</button>
+				</div>
+
+				<div class="management-content-table">
+					<table class="table">
+						<thead align="left">
+							<tr>
+								<th>Name</th>
+								<th>Last Modified</th>
+								<th>Others</th>
+							</tr>
+						</thead>
+						<tbody align="left" class="table-body">
+							<tr>
+								<td>
+									<div class="td-file">
+										<img src="src/assets/icons/doc.png" alt="">
+										people.xlsx
+									</div>
+								</td>
+								<td>9:45 AM</td>
+								<td>others</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="td-file">
+										<img src="src/assets/icons/pdf.png" alt="">
+										people.pdf
+									</div>
+								</td>
+								<td>9:45 AM</td>
+								<td>others</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="td-file">
+										<img src="src/assets/icons/png.png" alt="">
+										people.png
+									</div>
+								</td>
+								<td>9:45 AM</td>
+								<td>others</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</section>
 	</main>
 
@@ -60,6 +117,12 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		document.querySelector(".box-button-to-go-back").addEventListener('click', () => {
+			window.location.href = "index.html";
+		})
+	</script>
 	
 	<script type="module" src="src/controllers/manager/manager_controller.js" defer></script>
 	<script type="module" src="src/utils/acessibility.js" defer></script>
