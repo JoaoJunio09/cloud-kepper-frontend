@@ -1,6 +1,12 @@
+import { FileStorageService } from "../../services/file_storage_service.js";
 import { FolderStructure } from "../../services/folder_structure_service.js";
 
+const btnToGoBack = document.querySelector("#btnToGoBack");
+
 const userId = Number.parseInt(localStorage.getItem('userId'));
+
+let countStage = 0;
+let stages;
 
 async function fillInUserFiles() {
 	try {
@@ -8,9 +14,14 @@ async function fillInUserFiles() {
 		const folder_structure_html = document.querySelector(".folder-structure");
 		const table = document.querySelector(".table");
 		
-		folder_structure_html.innerHTML = updatesUserFiles(structure.root.children);
+		const { htmlSidebar, htmlFileBrowser } = updatesUserFiles(structure.root.children);
+
+		folder_structure_html.innerHTML = htmlSidebar;
+		table.innerHTML = htmlFileBrowser;
 
 		attachEventsToFolderButtons();
+
+		return table.innerHTML;
 	}
 	catch (error) {
 		console.log(error);
@@ -19,18 +30,23 @@ async function fillInUserFiles() {
 
 function updatesUserFiles(list) {
 
-	let html = "";
+	let htmlSidebar = "";
+	let htmlFileBrowser = "";
 
 	list.forEach(child => {
 		if (child.type === "folder") {
-			html += createElementHTMLFolder(child);
+			const { childrenHtmlFileSidebar, childrenHtmlFileBrowser } = createElementHTMLFolder(child);
+			htmlSidebar += childrenHtmlFileSidebar;
+			htmlFileBrowser += childrenHtmlFileBrowser;
 		}
 		else if (child.type === "file") {
-			html += createElementHTMLFile(child);
+			const { elementHtmlFileSidebar, elementHtmlFileBrowser } = createElementHTMLFile(child);
+			htmlSidebar += elementHtmlFileSidebar;
+			htmlFileBrowser += elementHtmlFileBrowser;
 		}
 	});
 	
-	return html;
+	return { htmlSidebar, htmlFileBrowser };
 }
 
 function createElementHTMLFile(child) {
@@ -61,27 +77,46 @@ function createElementHTMLFile(child) {
 			imgFileType = "<img src='src/assets/icons/arquivo (1).png' alt='file-type' class='file-default'>";
 	}
 
-	return `
+	const elementHtmlFileSidebar = `
 		<div class="file" fileId=${fileId}>
 			${imgFileType}
 			<p>${child.name}</p>
 		</div>
 	`;
+
+	const elementHtmlFileBrowser = `
+		<tr>
+			<td>
+				<div class="td-file" fileId="${fileId}">
+					${imgFileType}
+					${child.name}
+				</div>
+			</td>
+			<td>9:45 AM</td>
+			<td>
+				<img src="src/assets/icons/elipse.png" alt="others">
+			</td>
+		</tr>
+	`;
+
+	return { elementHtmlFileSidebar, elementHtmlFileBrowser };
 }
 
 function createElementHTMLFolder(child) {
 
-	let childrenHtml = "";
+	let childrenHtmlFileSidebar = "";
+	let childrenHtmlFileBrowser = "";
 
 	if (child.children && child.children.length > 0) {
-		childrenHtml = `
+		const { htmlSidebar } = updatesUserFiles(child.children);
+		childrenHtmlFileSidebar = `
 			<div class="child">
-				${updatesUserFiles(child.children)}
+				${htmlSidebar}
 			</div>
 		`;
 	}
 
-	return `
+	childrenHtmlFileSidebar = `
 		<div class="folder">
 			<img src="src/assets/images/folder_19026003.png" alt="">
 			<p>${child.name}</p>
@@ -89,8 +124,25 @@ function createElementHTMLFolder(child) {
 				<img src="src/assets/icons/down-arrow.png" alt="" class="btnOpenChildrenForFolder">
 			</div>
 		</div>
-		${childrenHtml}
+		${childrenHtmlFileSidebar}
 	`;
+
+	childrenHtmlFileBrowser = `
+		<tr>
+			<td class="btnOpenChildrenForFolderBrowser" data-children='${JSON.stringify(child.children || [])}'>
+				<div class="td-folder">
+					<img src="src/assets/images/folder_19026003.png" alt="" class="folder-style-browser">
+					${child.name}
+				</div>
+			</td>
+			<td>9:45 AM</td>
+			<td>
+				<img src="src/assets/icons/elipse.png" alt="others">
+			</td>
+		</tr>
+	`;
+
+	return { childrenHtmlFileSidebar, childrenHtmlFileBrowser };
 }
 
 async function readJsonFromFolderStructureByUserId(id) {
@@ -100,38 +152,89 @@ async function readJsonFromFolderStructureByUserId(id) {
 
 function attachEventsToFolderButtons() {
     const btnsOpenChild = document.querySelectorAll(".btnOpenChildrenForFolder");
+    const btnsOpenChildForBrowser = document.querySelectorAll(".btnOpenChildrenForFolderBrowser");
 
     btnsOpenChild.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-					const folder = btn.closest(".folder");
-					const childHtml = folder.nextElementSibling;
+			let openChild = false;
 
-					if (childHtml) {
-						childHtml.classList.toggle("show-child");
-						btn.style.transform = childHtml.classList.contains("show-child")
-							? "rotate(180deg)"
-							: "rotate(0deg)";
+      btn.addEventListener('click', (e) => {
+				const folder = btn.closest(".folder");
+				const childHtml = folder.nextElementSibling;
+					
+				if (childHtml) {
+					if (!openChild) {
+						openChild = true;
+						childHtml.classList.add("show-child");
+						btn.style.transform = "rotate(180deg)";
 					}
-				})
+					else {
+						openChild = false;
+						childHtml.classList.remove("show-child");
+						btn.style.transform = "rotate(0deg)";	
+					}
+				}
+			});
     });
+
+		btnsOpenChildForBrowser.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+					document.querySelector("#btnToGoBack").innerHTML = "Voltar";
+
+					const table = document.querySelector(".table");
+
+					const childrenData = btn.getAttribute('data-children');
+					const children = childrenData ? JSON.parse(childrenData) : [];
+		
+					const { htmlFileBrowser } = updatesUserFiles(children);
+
+					table.innerHTML = "";
+					table.innerHTML = htmlFileBrowser;
+
+					countStage++;
+					stages.push({ stage: countStage, content: htmlFileBrowser });
+
+					attachEventsToFolderButtons();
+				});
+    });
+
+		btnToGoBack.addEventListener('click', toGoBack);
 }
 
-function openFile(fileId) {
+async function openFile(fileId) {
 	try {
-		console.log(fileId);
+		const { fileURL, blob } = await FileStorageService.downloadOrPreview("preview", fileId);
+
+		window.open(fileURL, 'blank');
 	}
 	catch (error) {
 		console.log(error);
 	}
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function toGoBack() {
+	countStage--;
+	const table = document.querySelector(".table");
+
+	table.innerHTML = stages[countStage].content;
+
+	attachEventsToFolderButtons();
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+	stages = [];
+	
 	fillInUserFiles();
+
+	stages = [{ stage: 0, content: await fillInUserFiles() }];
 });
 
 document.addEventListener('click', (e) => {
 	const file = e.target.closest(".file");
+	const tdFile = e.target.closest(".td-file");
 	if (file) {
 		openFile(file.getAttribute("fileId"));
+	}
+	if (tdFile) {
+		openFile(tdFile.getAttribute("fileId"));
 	}
 })

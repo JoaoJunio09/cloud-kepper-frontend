@@ -24,12 +24,15 @@
 				<div class="folder-structure">
 					
 				</div>
+				<div class="options-user">
+					<img src="src/assets/icons/configuracoes (1).png" alt="">
+				</div>
 			</div>
 		</section>
 		<section class="management-content management-content-desktop">
 			<div class="box-button-to-go-back">
 				<img src="src/assets/icons/back.png" alt="">
-				<h2>Home</h2>
+				<h2 id="btnToGoBack">Home</h2>
 			</div>
 
 			<div class="management-content-header">
@@ -47,7 +50,7 @@
 							<tr>
 								<th>Name</th>
 								<th>Last Modified</th>
-								<th>Others</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody align="left" class="table-body">
@@ -59,7 +62,9 @@
 									</div>
 								</td>
 								<td>9:45 AM</td>
-								<td>others</td>
+								<td>
+									<img src="src/assets/icons/elipse.png" alt="others">
+								</td>
 							</tr>
 							<tr>
 								<td>
@@ -69,7 +74,7 @@
 									</div>
 								</td>
 								<td>9:45 AM</td>
-								<td>others</td>
+								<td><img src="src/assets/icons/elipse.png" alt="others"></td>
 							</tr>
 							<tr>
 								<td>
@@ -79,7 +84,7 @@
 									</div>
 								</td>
 								<td>9:45 AM</td>
-								<td>others</td>
+								<td><img src="src/assets/icons/elipse.png" alt="others"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -119,9 +124,6 @@
 	</div>
 
 	<script>
-		document.querySelector(".box-button-to-go-back").addEventListener('click', () => {
-			window.location.href = "index.html";
-		})
 	</script>
 	
 	<script type="module" src="src/controllers/manager/manager_controller.js" defer></script>

@@ -10,9 +10,10 @@ font-family: "Roboto", sans-serif;
 	width: 50px;
 	position: fixed;
 	bottom: 20px;
-	right: 20px;
+	right: 60px;
 	cursor: pointer;
 	filter: var(--filter-invert-img-acessibility);
+	z-index: 1000;
 }
 
 .acessibility {
