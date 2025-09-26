@@ -280,6 +280,90 @@ tbody tr td:nth-child(3) img {
     filter: var(--filter-folder-img);
 }
 
+.container-new-folder {
+    padding: 15px 15px 25px 15px;
+    height: auto;
+    width: 400px;
+    border-radius: 5px;
+    background-color: var(--bg-color-container-new-folder);
+    box-shadow: 0px 0px 50px rgba(8, 1, 115, 0.151);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s all;
+}
+
+.show-container-new-folder {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.container-new-folder h1 {
+    font-family: "Poppins", sans-serif;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 1.7em;
+}
+
+.btn-close-new-folder {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    cursor: pointer;
+}
+
+.container-new-folder img {
+    width: 25px;
+}
+
+.container-new-folder-body {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.container-new-folder-body input {
+    height: 35px;
+    width: 100%;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.18);
+    font-size: .9rem;
+    background-color: var(--bg-color-input-new-folder);
+    color: var(--text-color);
+    padding-inline-start: 10px;
+}
+
+.container-new-folder button {
+    height: 40px;
+    width: 50%;
+    margin-top: 20px;
+    background-color: rgb(2, 137, 2);
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    
+    transition: .3s all;
+}
+
+.container-new-folder button:hover {
+    background-color: transparent;
+    color: rgb(0, 153, 0);
+    border: 1px solid rgb(0, 153, 0);
+}
+
 @media(min-width: 1000px) {
 
     .main {

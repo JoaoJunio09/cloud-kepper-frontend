@@ -1,7 +1,15 @@
 import { FileStorageService } from "../../services/file_storage_service.js";
 import { FolderStructure } from "../../services/folder_structure_service.js";
+import { closeMessageError, openMessageError } from "../../utils/message_error.js";
+import { openMessageSuccess } from "../../utils/message_success.js";
 
 const btnToGoBack = document.querySelector("#btnToGoBack");
+const btnOpenNewFolder = document.querySelector("#btn-new-folder");
+const btnCloseNewFolder = document.querySelector(".btn-close-new-folder");
+const btnCreateNewFolder = document.querySelector("#btn-create-new-folder");
+
+const containerNewFolder = document.querySelector(".container-new-folder");
+const fade = document.querySelector(".fade");
 
 const userId = Number.parseInt(localStorage.getItem('userId'));
 
@@ -177,24 +185,24 @@ function attachEventsToFolderButtons() {
     });
 
 		btnsOpenChildForBrowser.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-					document.querySelector("#btnToGoBack").innerHTML = "Voltar";
+      btn.addEventListener('click', (e) => {
+				document.querySelector("#btnToGoBack").innerHTML = "Voltar";
 
-					const table = document.querySelector(".table");
+				const table = document.querySelector(".table");
 
-					const childrenData = btn.getAttribute('data-children');
-					const children = childrenData ? JSON.parse(childrenData) : [];
+				const childrenData = btn.getAttribute('data-children');
+				const children = childrenData ? JSON.parse(childrenData) : [];
 		
-					const { htmlFileBrowser } = updatesUserFiles(children);
+				const { htmlFileBrowser } = updatesUserFiles(children);
 
-					table.innerHTML = "";
-					table.innerHTML = htmlFileBrowser;
+				table.innerHTML = "";
+				table.innerHTML = htmlFileBrowser;
 
-					countStage++;
-					stages.push({ stage: countStage, content: htmlFileBrowser });
+				countStage++;
+				stages.push({ stage: countStage, content: htmlFileBrowser });
 
-					attachEventsToFolderButtons();
-				});
+				attachEventsToFolderButtons();
+			});
     });
 
 		btnToGoBack.addEventListener('click', toGoBack);
@@ -220,9 +228,47 @@ function toGoBack() {
 	attachEventsToFolderButtons();
 }
 
+function newFolder() {
+	const nameForNewFolder = document.querySelector("#name-for-new-folder").value;
+
+	try {
+		validationNameForNewFolder(nameForNewFolder);
+
+		console.log("clico")
+	}
+	catch (error) {
+		openMessageError(error.message);
+	}
+}
+
+function validationNameForNewFolder(name) {
+	let message_error = (localStorage.getItem('lang') === "pt") 
+		? "Preencha o nome da nova pasta"
+		: "Fill in the name of the new folder";
+	if (name === "" || name === null || name === undefined) {
+		throw new Error(message_error);
+	}
+}
+
+function openNewFolder() {
+	if (containerNewFolder) {
+		containerNewFolder.classList.add("show-container-new-folder");
+		fade.classList.add("show-fade");
+	}
+}
+
+function closeNewFolder() {
+	if (containerNewFolder) {
+		containerNewFolder.classList.remove("show-container-new-folder");
+		fade.classList.remove("show-fade");
+	}
+}
+
+btnCreateNewFolder.addEventListener('click', newFolder);
+btnOpenNewFolder.addEventListener('click', openNewFolder);
+btnCloseNewFolder.addEventListener('click', closeNewFolder);
+
 document.addEventListener('DOMContentLoaded', async () => {
-	stages = [];
-	
 	fillInUserFiles();
 
 	stages = [{ stage: 0, content: await fillInUserFiles() }];

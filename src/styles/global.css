@@ -70,6 +70,8 @@ a {
     --text-color-table: #000000c9;
     --text-color-name-file: #000000;
     --border-tbody-tr-table: #2a2a2a1d;
+    --bg-color-container-new-folder: rgb(230, 230, 230);
+    --bg-color-input-new-folder: rgb(227, 227, 227);
 }
 
 .theme-dark {
@@ -99,4 +101,6 @@ a {
     --text-color-table: #ffffffc2;
     --text-color-name-file: #ffffff;
     --border-tbody-tr-table: #ffffff0c;
+    --bg-color-container-new-folder: rgb(14, 0, 29);
+    --bg-color-input-new-folder: #ffffff09;
 }
