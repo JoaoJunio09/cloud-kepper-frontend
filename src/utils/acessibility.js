@@ -42,6 +42,48 @@ function translatePage(language) {
 	const textsForPage = document.querySelectorAll("[data-i18n]");
 	textsForPage.forEach(el => {
 		el.innerHTML = translate(el.getAttribute("data-i18n"));
+
+		if (el.id === "btn-upload") {
+			el.innerHTML = `
+				<img src="src/assets/icons/cloud-computing.png" alt="" class="img-options-header">
+				${translate(el.getAttribute('data-i18n'))}
+			`;
+		}
+
+		if (el.id === "btn-new-folder") {
+			el.innerHTML = `
+				<img src="src/assets/icons/folder.png" alt="" class="img-options-header">
+				${translate(el.getAttribute('data-i18n'))}
+			`;
+		}
+
+		if (el.id === "btn-delete") {
+			el.innerHTML = `
+				<img src="src/assets/icons/delete.png" alt="" class="img-options-header">
+				${translate(el.getAttribute('data-i18n'))}
+			`;
+		}
+
+		if (el.id === "btn-delete-for-options") {
+			el.innerHTML = `
+				<img src="src/assets/icons/delete.png" alt="" id="img-options">
+				${translate(el.getAttribute('data-i18n'))}
+			`;
+		}
+
+		if (el.id === "btn-move-for-options") {
+			el.innerHTML = `
+				<img src="src/assets/icons/expand-arrows.png" alt="" id="img-options">
+				${translate(el.getAttribute('data-i18n'))}
+			`;
+		}
+
+		if (el.id === "btn-download-for-options") {
+			el.innerHTML = `
+				<img src="src/assets/icons/download.png" alt="" id="img-options">
+				${translate(el.getAttribute('data-i18n'))}
+			`;
+		}
 	});
 }
 

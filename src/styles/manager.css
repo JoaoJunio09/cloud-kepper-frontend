@@ -163,7 +163,7 @@ font-family: "Roboto", sans-serif;
     color: var(--text-color);
 }
 
-.management-content-table {
+.management-content-table, .folder-structure {
     height: 500px;
     overflow-y: auto;
     scrollbar-width: thin;          /* Firefox */
@@ -188,7 +188,6 @@ font-family: "Roboto", sans-serif;
     background-color: #ff0000; /* cor ao passar o mouse */
 }
 
-
 .management-content-header {
     margin-top: 40px;
 }
@@ -207,10 +206,20 @@ font-family: "Roboto", sans-serif;
     gap: 10px;
 }
 
+.img-options-header {
+    filter: invert(90%);
+    width: 20px;
+    transition: .3s all;
+}
+
 .management-content-header-options button {
     height: 45px;
     width: 120px;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
     background-color: var(--bg-color-button-option);
     color: #fff;
     border: 1px solid #ffffff0e;
@@ -222,6 +231,34 @@ font-family: "Roboto", sans-serif;
 }
 
 .management-content-header-options button:hover {
+    background-color: transparent;
+    border: 1px solid #161616;
+    color: var(--text-color-hover-button-option);
+}
+
+.management-content-header-options button:hover .img-options-header {
+    filter: invert(0%);
+}
+
+.management-content-header-options button:nth-child(3) {
+    border: 1px solid #ffffff0e;
+    background-color: var(--bg-color-button-option-delete);
+    border-bottom: 1px solid rgb(248, 12, 12);
+}
+
+.management-content-header-options button:nth-child(3):hover {
+    background-color: transparent;
+    border: 1px solid #161616;
+    color: var(--text-color-hover-button-option);
+}
+
+.management-content-header-options button:nth-child(2) {
+    border: 1px solid #c30a0a0e;
+    background-color: var(--bg-color-button-option-new-folder);
+    border-bottom: 1px solid rgb(2, 179, 23);
+}
+
+.management-content-header-options button:nth-child(2):hover {
     background-color: transparent;
     border: 1px solid #161616;
     color: var(--text-color-hover-button-option);
@@ -260,10 +297,6 @@ td img {
     width: 20px;
 }
 
-tbody tr td:nth-child(3) {
-    position: relative;
-}
-
 tbody tr td:nth-child(3) img {
     filter: var(--filter-folder-img);
     cursor: pointer;
@@ -274,6 +307,10 @@ tbody tr td:nth-child(3) img {
     align-items: center;
     gap: 10px;
     cursor: pointer;
+}
+
+.td-options {
+    position: relative;
 }
 
 .folder-style-browser {
@@ -362,6 +399,56 @@ tbody tr td:nth-child(3) img {
     background-color: transparent;
     color: rgb(0, 153, 0);
     border: 1px solid rgb(0, 153, 0);
+}
+
+.container-options {
+    position: absolute;
+    top: 50px;
+    left: -88px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(34, 0, 128);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s ease-out;
+}
+
+.show-container-options {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#img-options {
+    filter: invert(100%);
+}
+
+.container-options button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    height: 30px;
+    font-family: "Poppins", sans-serif;
+    font-size: .8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    height: 35px;
+    background-color: #02022ae8;
+    color: #e4dfdf;
+    border: 1px solid transparent;
+    border: none;
+    
+    transition: .3s ease;
+}
+.container-options button:hover {
+    background-color: transparent;
+    color: #dadada;
 }
 
 @media(min-width: 1000px) {

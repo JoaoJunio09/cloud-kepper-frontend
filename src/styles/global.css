@@ -67,6 +67,8 @@ a {
     --filter-folder-img: none;
     --bg-color-button-option: #071fa8;
     --text-color-hover-button-option: #000;
+    --bg-color-button-option-delete: #bf0303;
+    --bg-color-button-option-new-folder: rgb(5, 91, 122);
     --text-color-table: #000000c9;
     --text-color-name-file: #000000;
     --border-tbody-tr-table: #2a2a2a1d;
@@ -97,6 +99,8 @@ a {
     --border-manager: 1px solid #ffffff18;
     --filter-folder-img: contrast(0%);
     --bg-color-button-option: #151515;
+    --bg-color-button-option-delete: #140000;
+    --bg-color-button-option-new-folder: rgb(1, 19, 0);
     --text-color-hover-button-option: #fff;
     --text-color-table: #ffffffc2;
     --text-color-name-file: #ffffff;

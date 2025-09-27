@@ -93,7 +93,7 @@ function createElementHTMLFile(child) {
 	`;
 
 	const elementHtmlFileBrowser = `
-		<tr>
+		<tr class="tr-file-or-folder">
 			<td>
 				<div class="td-file" fileId="${fileId}">
 					${imgFileType}
@@ -101,8 +101,22 @@ function createElementHTMLFile(child) {
 				</div>
 			</td>
 			<td>9:45 AM</td>
-			<td>
-				<img src="src/assets/icons/elipse.png" alt="others">
+			<td class="td-options">
+				<img src="src/assets/icons/elipse.png" alt="others" id="btn-options">
+				<div class="container-options">
+					<button data-i18n="download" id="btn-download-for-options">
+						<img src="src/assets/icons/download.png" alt="" id="img-options">
+						Download
+					</button>
+					<button data-i18n="move" id="btn-move-for-options">
+						<img src="src/assets/icons/expand-arrows.png" alt="" id="img-options">
+						Move
+					</button>
+					<button data-i18n="delete" id="btn-delete-for-options">
+						<img src="src/assets/icons/delete.png" alt="" id="img-options">
+						Delete
+					</button>
+				</div>
 			</td>
 		</tr>
 	`;
@@ -144,8 +158,18 @@ function createElementHTMLFolder(child) {
 				</div>
 			</td>
 			<td>9:45 AM</td>
-			<td>
-				<img src="src/assets/icons/elipse.png" alt="others">
+			<td class="td-options">
+				<img src="src/assets/icons/elipse.png" alt="others" id="btn-options">
+				<div class="container-options">
+					<button data-i18n="delete" id="btn-delete-for-options">
+						<img src="src/assets/icons/delete.png" alt="" id="img-options">
+						Delete
+					</button>
+					<button data-i18n="move" id="btn-move-for-options">
+						<img src="src/assets/icons/expand-arrows.png" alt="" id="img-options">
+						Move
+					</button>
+				</div>
 			</td>
 		</tr>
 	`;
@@ -161,6 +185,8 @@ async function readJsonFromFolderStructureByUserId(id) {
 function attachEventsToFolderButtons() {
     const btnsOpenChild = document.querySelectorAll(".btnOpenChildrenForFolder");
     const btnsOpenChildForBrowser = document.querySelectorAll(".btnOpenChildrenForFolderBrowser");
+		const btnsOptions = document.querySelectorAll("#btn-options");
+		const trFileOrFolder = document.querySelectorAll(".tr-file-or-folder");
 
     btnsOpenChild.forEach(btn => {
 			let openChild = false;
@@ -205,18 +231,22 @@ function attachEventsToFolderButtons() {
 			});
     });
 
+		btnsOptions.forEach(btn => {
+			btn.addEventListener('click', (e) => {			
+				const td = e.target.closest(".td-options");
+				const containerOptions = td.querySelector(".container-options");
+
+				containerOptions.classList.toggle("show-container-options");
+			});
+		})
+
+		trFileOrFolder.forEach(tr => {
+			const btnMove = tr.querySelector("#btn-move-for-options");
+
+			btnMove.addEventListener('click', () => move(tr));
+		})
+
 		btnToGoBack.addEventListener('click', toGoBack);
-}
-
-async function openFile(fileId) {
-	try {
-		const { fileURL, blob } = await FileStorageService.downloadOrPreview("preview", fileId);
-
-		window.open(fileURL, 'blank');
-	}
-	catch (error) {
-		console.log(error);
-	}
 }
 
 function toGoBack() {
@@ -228,16 +258,63 @@ function toGoBack() {
 	attachEventsToFolderButtons();
 }
 
-function newFolder() {
-	const nameForNewFolder = document.querySelector("#name-for-new-folder").value;
+function move(tr) {
+	const fileId = tr.querySelector(".td-file").getAttribute('fileId');
+	console.log(fileId);
+}
+
+async function newFolder() {
+	class FolderAdded {
+		userId = null;
+		newFolderName = null;
+		folderName = null;
+
+		constructor(userId, newFolderName, folderName) {
+			this.userId = userId,
+			this.newFolderName = newFolderName,
+			this.folderName = folderName
+		}
+	}
+
+	let nameForNewFolder = document.querySelector("#name-for-new-folder").value;
+
+	let folderNameDefault = "root";
+	let folderCreated = false;
 
 	try {
 		validationNameForNewFolder(nameForNewFolder);
 
-		console.log("clico")
+		const folderAdded = new FolderAdded(userId, nameForNewFolder, folderNameDefault);
+		const response = FolderStructure.createFolder(folderAdded);
+		folderCreated = true;
+
+		if (response == null) {
+			let message_error = (localStorage.getItem('lang') === "pt") 
+				? "Não foi possível criar a pasta"
+				: "Could not create folder"
+			openMessageError(message_error);
+			return;
+		}
+
+		if (folderCreated) {	
+			closeNewFolder();
+			window.location.reload();
+		}
 	}
 	catch (error) {
+		console.log(error);
 		openMessageError(error.message);
+	}
+}
+
+async function openFile(fileId) {
+	try {
+		const { fileURL, blob } = await FileStorageService.downloadOrPreview("preview", fileId);
+
+		window.open(fileURL, 'blank');
+	}
+	catch (error) {
+		console.log(error);
 	}
 }
 
@@ -268,12 +345,6 @@ btnCreateNewFolder.addEventListener('click', newFolder);
 btnOpenNewFolder.addEventListener('click', openNewFolder);
 btnCloseNewFolder.addEventListener('click', closeNewFolder);
 
-document.addEventListener('DOMContentLoaded', async () => {
-	fillInUserFiles();
-
-	stages = [{ stage: 0, content: await fillInUserFiles() }];
-});
-
 document.addEventListener('click', (e) => {
 	const file = e.target.closest(".file");
 	const tdFile = e.target.closest(".td-file");
@@ -284,3 +355,8 @@ document.addEventListener('click', (e) => {
 		openFile(tdFile.getAttribute("fileId"));
 	}
 })
+
+document.addEventListener('DOMContentLoaded', async () => {
+	fillInUserFiles();
+	stages = [{ stage: 0, content: await fillInUserFiles() }];
+});

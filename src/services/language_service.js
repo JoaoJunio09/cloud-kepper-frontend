@@ -14,6 +14,13 @@ const i18n = {
 		oneCapitalLetter: "- 1 capital letter",
 		oneNumber: "- 1 number",
 		oneSpecialCaracter: "- 1 special character",
+		myFiles: "My Files",
+		upload: "Upload",
+		newFolder: "New Folder",
+		delete: "Delete",
+		create: "Create",
+		move: "Move",
+		download: "Download",
 	},
 	pt: {
 		theme: "Tema",
@@ -30,6 +37,13 @@ const i18n = {
 		oneCapitalLetter: "- 1 letra maiúscula",
 		oneNumber: "- 1 número",
 		oneSpecialCaracter: "- 1 caracter especial",
+		myFiles: "Meus Arquivos",
+		upload: "Carregar",
+		newFolder: "Nova Pasta",
+		delete: "Excluir",
+		create: "Criar",
+		move: "Mover",
+		download: "Baixar",
 	}
 };
 
