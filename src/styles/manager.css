@@ -57,6 +57,10 @@ font-family: "Roboto", sans-serif;
     font-size: 1rem;   
 }
 
+.select-folder {
+    background-color: rgba(0, 98, 255, 0.151);
+}
+
 .folder-structure {
     padding-top: 20px;
     padding-bottom: 10px;
@@ -446,9 +450,107 @@ tbody tr td:nth-child(3) img {
     
     transition: .3s ease;
 }
+
 .container-options button:hover {
     background-color: transparent;
     color: #dadada;
+}
+
+.container-select-folder-for-move-file {
+    height: 550px;
+    width: 400px;
+    padding: 20px 15px;
+    border-radius: 10px;
+    background-color: var(--bg-color-select-move);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.154);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    scrollbar-width: thin;
+    scrollbar-color: #0faade transparent;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s all;
+}
+
+.show-container-select-folder-for-move-file {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.container-select-folder-for-move-file h2 {
+    font-family: "Roboto", sans-serif;
+    color: var(--text-color);
+    padding-bottom: 7px;
+    border-bottom: 1px solid #ffffff30;
+}
+
+.folder-structure-select-folder-for-move-file {
+    height: 71%;
+    overflow-y: auto;
+}
+
+.selected-folder {
+    height: 60px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.146);
+}
+
+#btn-close-select-folder-for-move-file {
+    width: 25px;
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    cursor: pointer;
+}
+
+#btn-move-file-for-root-folder {
+    width: 50%;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    background-color: rgb(55, 15, 155);
+    color: #fff;
+    border: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    border: 1px solid transparent;
+
+    transition: .3s all;
+}
+
+#btn-move-file-for-root-folder:hover {
+    color: rgb(55, 15, 155);
+    border: 1px solid rgb(55, 15, 155);
+    background-color: transparent;
+}
+
+#btn-move-file {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    background-color: rgb(40, 149, 51);
+    color: #fff;
+    border: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    border: 1px solid transparent;
+
+    transition: .3s all;
+}
+
+#btn-move-file:hover {
+    color: rgb(40, 149, 51);
+    border: 1px solid rgb(40, 149, 51);
+    background-color: transparent;
 }
 
 @media(min-width: 1000px) {

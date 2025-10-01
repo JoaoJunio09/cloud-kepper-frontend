@@ -7,7 +7,11 @@ const btnToGoBack = document.querySelector("#btnToGoBack");
 const btnOpenNewFolder = document.querySelector("#btn-new-folder");
 const btnCloseNewFolder = document.querySelector(".btn-close-new-folder");
 const btnCreateNewFolder = document.querySelector("#btn-create-new-folder");
+const btnCloseSelectMove = document.querySelector("#btn-close-select-folder-for-move-file");
+const btnMoveFile = document.querySelector("#btn-move-file");
+const btnMoveFileRootFolderDefault = document.querySelector("#btn-move-file-for-root-folder");
 
+const containerSelect = document.querySelector(".container-select-folder-for-move-file");
 const containerNewFolder = document.querySelector(".container-new-folder");
 const fade = document.querySelector(".fade");
 
@@ -16,15 +20,20 @@ const userId = Number.parseInt(localStorage.getItem('userId'));
 let countStage = 0;
 let stages;
 
+let fileId;
+let folderName;
+
 async function fillInUserFiles() {
 	try {
 		const structure = await readJsonFromFolderStructureByUserId(userId);
 		const folder_structure_html = document.querySelector(".folder-structure");
+		const folder_structure_html_select_folder_for_move_file = document.querySelector(".folder-structure-select-folder-for-move-file");
 		const table = document.querySelector(".table");
 		
 		const { htmlSidebar, htmlFileBrowser } = updatesUserFiles(structure.root.children);
 
 		folder_structure_html.innerHTML = htmlSidebar;
+		folder_structure_html_select_folder_for_move_file.innerHTML = htmlSidebar;
 		table.innerHTML = htmlFileBrowser;
 
 		attachEventsToFolderButtons();
@@ -139,7 +148,7 @@ function createElementHTMLFolder(child) {
 	}
 
 	childrenHtmlFileSidebar = `
-		<div class="folder">
+		<div class="folder" folderName="${child.name}">
 			<img src="src/assets/images/folder_19026003.png" alt="">
 			<p>${child.name}</p>
 			<div>
@@ -154,7 +163,7 @@ function createElementHTMLFolder(child) {
 			<td class="btnOpenChildrenForFolderBrowser" data-children='${JSON.stringify(child.children || [])}'>
 				<div class="td-folder">
 					<img src="src/assets/images/folder_19026003.png" alt="" class="folder-style-browser">
-					${child.name}
+					<span>${child.name}</span>
 				</div>
 			</td>
 			<td>9:45 AM</td>
@@ -227,6 +236,8 @@ function attachEventsToFolderButtons() {
 				countStage++;
 				stages.push({ stage: countStage, content: htmlFileBrowser });
 
+				localStorage.setItem('currentFolder', btn.querySelector("span").innerHTML);
+
 				attachEventsToFolderButtons();
 			});
     });
@@ -243,7 +254,7 @@ function attachEventsToFolderButtons() {
 		trFileOrFolder.forEach(tr => {
 			const btnMove = tr.querySelector("#btn-move-for-options");
 
-			btnMove.addEventListener('click', () => move(tr));
+			btnMove.addEventListener('click', () => selectFolderForMove(tr));
 		})
 
 		btnToGoBack.addEventListener('click', toGoBack);
@@ -258,11 +269,67 @@ function toGoBack() {
 	attachEventsToFolderButtons();
 }
 
-function move(tr) {
-	const fileId = tr.querySelector(".td-file").getAttribute('fileId');
-	console.log(fileId);
+async function move(moveRootFolder) {
+
+	let folderNameDefault = "root";
+
+	try {
+		validationFileIdAndFolderName(fileId, folderName || folderNameDefault);
+
+		if (!moveRootFolder) {
+			folderNameDefault = folderName;
+			console.log(folderNameDefault);
+		}
+
+		const data = await FileStorageService.moveFile(userId, fileId, folderNameDefault);
+
+		if (data.fileId !== null) {
+			closeMessageError();
+			closeSelectMove();
+			fillInUserFiles();
+		}
+	}
+	catch (error) {
+		openMessageError(error.message);
+	}
 }
 
+function validationFileIdAndFolderName(fileId, folderName) {
+	let message_error = (localStorage.getItem('lang') === "pt") 
+		? "Id do arquivo ou nome da pasta são nulos"
+		: "File Id or Folder Name is null";
+	if (fileId === null || folderName === null || fileId === undefined || folderName === undefined) {
+		throw new Error(message_error);
+	}
+}
+
+function selectFolderForMove(tr) {
+	openSelectMove();
+
+	const folder_structure_select = document.querySelector(".folder-structure-select-folder-for-move-file");
+	const folders = folder_structure_select.querySelectorAll('.folder');
+
+	folders.forEach(folder => {
+		folder.addEventListener('click', () => {
+			closeAllBackgroundColor();
+			folderName = folder.getAttribute('folderName');
+			folder.classList.add("select-folder");
+		});
+	});
+
+	fileId = tr.querySelector(".td-file").getAttribute('fileId');
+}
+
+function closeAllBackgroundColor() {
+	const folder_structure_select = document.querySelector(".folder-structure-select-folder-for-move-file");
+	const folders = folder_structure_select.querySelectorAll('.folder');
+
+	folders.forEach(folder => {
+		folder.classList.remove("select-folder");
+	});
+}
+
+// IMPLEMENTAR ID PARA AS PASTAS TAMBÉM, PARA PODER CRIAR PASTAS COM O MESMO NOME ANINHADAS, E EVITAR CONFUSÃO.
 async function newFolder() {
 	class FolderAdded {
 		userId = null;
@@ -278,7 +345,7 @@ async function newFolder() {
 
 	let nameForNewFolder = document.querySelector("#name-for-new-folder").value;
 
-	let folderNameDefault = "root";
+	let folderNameDefault = localStorage.getItem('currentFolder') || "root";
 	let folderCreated = false;
 
 	try {
@@ -298,7 +365,6 @@ async function newFolder() {
 
 		if (folderCreated) {	
 			closeNewFolder();
-			window.location.reload();
 		}
 	}
 	catch (error) {
@@ -341,9 +407,24 @@ function closeNewFolder() {
 	}
 }
 
+function openSelectMove() {
+	if (containerSelect) {
+		containerSelect.classList.add("show-container-select-folder-for-move-file");
+	}
+}
+
+function closeSelectMove() {
+	if (containerSelect) {
+		containerSelect.classList.remove("show-container-select-folder-for-move-file");
+	}
+}
+
 btnCreateNewFolder.addEventListener('click', newFolder);
 btnOpenNewFolder.addEventListener('click', openNewFolder);
 btnCloseNewFolder.addEventListener('click', closeNewFolder);
+btnCloseSelectMove.addEventListener('click', closeSelectMove);
+btnMoveFile.addEventListener('click',() => move(false));
+btnMoveFileRootFolderDefault.addEventListener('click', () => move(true));
 
 document.addEventListener('click', (e) => {
 	const file = e.target.closest(".file");

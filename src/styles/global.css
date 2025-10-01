@@ -58,8 +58,8 @@ a {
     --bg-color-message-error: #fff;
     --text-color-message-error: #d50000;
     --filter-invert-img-acessibility: invert(0%);
-    --bg-color-input-register: transparent; 
-    --box-shadow-input-register: 0px 0px 5px rgba(0, 0, 0, 0.114); 
+    --bg-color-input-register: transparent;
+    --box-shadow-input-register: 0px 0px 5px rgba(0, 0, 0, 0.114);
     --bg-color-warning-password: rgb(237, 237, 237);
 
     --bg-color-body-manager: #fafafa;
@@ -74,6 +74,7 @@ a {
     --border-tbody-tr-table: #2a2a2a1d;
     --bg-color-container-new-folder: rgb(230, 230, 230);
     --bg-color-input-new-folder: rgb(227, 227, 227);
+    --bg-color-select-move: rgb(248, 248, 248);
 }
 
 .theme-dark {
@@ -107,4 +108,5 @@ a {
     --border-tbody-tr-table: #ffffff0c;
     --bg-color-container-new-folder: rgb(14, 0, 29);
     --bg-color-input-new-folder: #ffffff09;
+    --bg-color-select-move: rgb(28, 31, 36);
 }
