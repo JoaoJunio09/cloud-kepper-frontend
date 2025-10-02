@@ -230,11 +230,12 @@ function attachEventsToFolderButtons() {
 		
 				const { htmlFileBrowser } = updatesUserFiles(children);
 
-				table.innerHTML = "";
 				table.innerHTML = htmlFileBrowser;
 
 				countStage++;
 				stages.push({ stage: countStage, content: htmlFileBrowser });
+
+				console.log(stages);
 
 				localStorage.setItem('currentFolder', btn.querySelector("span").innerHTML);
 
@@ -264,7 +265,21 @@ function toGoBack() {
 	countStage--;
 	const table = document.querySelector(".table");
 
-	table.innerHTML = stages[countStage].content;
+	let verifyNumberStages = 0;
+
+	stages.forEach(stage => {
+		if (stage.stage === countStage) {
+			verifyNumberStages++;
+		}
+	});
+	
+	if (verifyNumberStages > 0) {
+		const filterStage = stages.filter(item => item.stage === countStage);
+		table.innerHTML = filterStage[filterStage.length - 1].content;
+	}
+	else {
+		table.innerHTML = stages[countStage].content;
+	}
 
 	attachEventsToFolderButtons();
 }
@@ -365,6 +380,7 @@ async function newFolder() {
 
 		if (folderCreated) {	
 			closeNewFolder();
+			window.location.reload();
 		}
 	}
 	catch (error) {
