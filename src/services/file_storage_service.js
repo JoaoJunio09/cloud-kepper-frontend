@@ -1,7 +1,7 @@
 const BASE_URL = "http://localhost:8080";
 
 const API_BASE_URL_DOWNLOAD_OR_PREVIEW = `${BASE_URL}/api/file/v1/:type/:fileId`;
-const API_BASE_URL_MOVE_FILE_A_OTHER_FOLDER = `${BASE_URL}/api/file/v1/:userId/:fileId/:folderName`;
+const API_BASE_URL_MOVE_FILE_A_OTHER_FOLDER = `${BASE_URL}/api/file/v1/:userId/:fileId/:folderName/:folderId`;
 
 async function downloadOrPreview(type, fileId) {
 	const urlInitial = API_BASE_URL_DOWNLOAD_OR_PREVIEW.replace(":type", type);

@@ -23,6 +23,13 @@ let stages;
 let fileId;
 let folderName;
 
+let globalVariables = {
+	currentFolderName: null,
+	currentFolderNameDefault: null,
+	currentFolderId: null,
+	currentFolderIdDefault: null,
+};
+
 async function fillInUserFiles() {
 	try {
 		const structure = await readJsonFromFolderStructureByUserId(userId);
@@ -36,8 +43,14 @@ async function fillInUserFiles() {
 		folder_structure_html_select_folder_for_move_file.innerHTML = htmlSidebar;
 		table.innerHTML = htmlFileBrowser;
 
+		if (countStage === 0) {
+			globalVariables.currentFolderNameDefault = structure.root.name;
+			globalVariables.currentFolderIdDefault = structure.root.id;
+		}
+
 		attachEventsToFolderButtons();
 
+		globalVariables.fillInTheAttributesOnce++;
 		return table.innerHTML;
 	}
 	catch (error) {
@@ -161,7 +174,7 @@ function createElementHTMLFolder(child) {
 	childrenHtmlFileBrowser = `
 		<tr>
 			<td class="btnOpenChildrenForFolderBrowser" data-children='${JSON.stringify(child.children || [])}'>
-				<div class="td-folder">
+				<div class="td-folder" folderId="${child.id}">
 					<img src="src/assets/images/folder_19026003.png" alt="" class="folder-style-browser">
 					<span>${child.name}</span>
 				</div>
@@ -235,10 +248,12 @@ function attachEventsToFolderButtons() {
 				countStage++;
 				stages.push({ stage: countStage, content: htmlFileBrowser });
 
-				console.log(stages);
+				globalVariables.currentFolderName = btn.querySelector("span").innerHTML;
+				globalVariables.currentFolderId = btn.querySelector(".td-folder").getAttribute('folderId');
 
-				localStorage.setItem('currentFolder', btn.querySelector("span").innerHTML);
-
+				if (countStage === 0) {
+					console.log("to na root")
+				}
 				attachEventsToFolderButtons();
 			});
     });
@@ -344,44 +359,48 @@ function closeAllBackgroundColor() {
 	});
 }
 
-// IMPLEMENTAR ID PARA AS PASTAS TAMBÉM, PARA PODER CRIAR PASTAS COM O MESMO NOME ANINHADAS, E EVITAR CONFUSÃO.
 async function newFolder() {
 	class FolderAdded {
 		userId = null;
 		newFolderName = null;
+		folderId = null
 		folderName = null;
 
-		constructor(userId, newFolderName, folderName) {
+		constructor(userId, newFolderName, folderId, folderName) {
 			this.userId = userId,
 			this.newFolderName = newFolderName,
+			this.folderId = folderId;
 			this.folderName = folderName
 		}
 	}
 
 	let nameForNewFolder = document.querySelector("#name-for-new-folder").value;
 
-	let folderNameDefault = localStorage.getItem('currentFolder') || "root";
-	let folderCreated = false;
+	let folderName = globalVariables.currentFolderName;
+	let folderId = globalVariables.currentFolderId;
+
+	if (folderName === null && folderId === null || countStage === 0) {
+		folderName = globalVariables.currentFolderNameDefault;
+		folderId = globalVariables.currentFolderIdDefault;
+	}
 
 	try {
 		validationNameForNewFolder(nameForNewFolder);
 
-		const folderAdded = new FolderAdded(userId, nameForNewFolder, folderNameDefault);
-		const response = FolderStructure.createFolder(folderAdded);
-		folderCreated = true;
+		const folderAdded = new FolderAdded(userId, nameForNewFolder, folderId, folderName);
 
-		if (response == null) {
+		const response = await FolderStructure.createFolder(folderAdded);
+
+		if (!response) {
 			let message_error = (localStorage.getItem('lang') === "pt") 
-				? "Não foi possível criar a pasta"
-				: "Could not create folder"
+				? "Não foi possível criar a pasta" 
+				: "Could not create folder";
 			openMessageError(message_error);
 			return;
 		}
 
-		if (folderCreated) {	
-			closeNewFolder();
-			window.location.reload();
-		}
+		await fillInUserFiles();
+		closeNewFolder();
 	}
 	catch (error) {
 		console.log(error);
