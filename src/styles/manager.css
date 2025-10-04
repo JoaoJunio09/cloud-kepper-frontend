@@ -241,7 +241,7 @@ font-family: "Roboto", sans-serif;
 }
 
 .management-content-header-options button:hover .img-options-header {
-    filter: invert(0%);
+    filter: var(--filter-folder-img);
 }
 
 .management-content-header-options button:nth-child(3) {

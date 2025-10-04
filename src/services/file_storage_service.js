@@ -19,10 +19,11 @@ async function downloadOrPreview(type, fileId) {
 	return { fileURL, blob };
 }
 
-async function moveFile(userId, fileId, folderName) {
+async function moveFile(userId, fileId, folderId, folderName) {
 	const urlUserId = API_BASE_URL_MOVE_FILE_A_OTHER_FOLDER.replace(":userId", userId);
 	const urlFileId = urlUserId.replace(":fileId", fileId);
-	const url = urlFileId.replace(":folderName", folderName);
+	const urlFolderName = urlFileId.replace(":folderName", folderName);
+	const url = urlFolderName.replace(":folderId", folderId);
 	const response = await fetch(url, {
 		method: 'GET'
 	});

@@ -17,13 +17,14 @@ const fade = document.querySelector(".fade");
 
 const userId = Number.parseInt(localStorage.getItem('userId'));
 
-let countStage = 0;
-let stages;
-
-let fileId;
 let folderName;
 
 let globalVariables = {
+	countStage: 0,
+	stages: null,
+	fileId: null,
+	folderName: null,
+	folderId: null,
 	currentFolderName: null,
 	currentFolderNameDefault: null,
 	currentFolderId: null,
@@ -43,7 +44,7 @@ async function fillInUserFiles() {
 		folder_structure_html_select_folder_for_move_file.innerHTML = htmlSidebar;
 		table.innerHTML = htmlFileBrowser;
 
-		if (countStage === 0) {
+		if (globalVariables.countStage === 0) {
 			globalVariables.currentFolderNameDefault = structure.root.name;
 			globalVariables.currentFolderIdDefault = structure.root.id;
 		}
@@ -161,7 +162,7 @@ function createElementHTMLFolder(child) {
 	}
 
 	childrenHtmlFileSidebar = `
-		<div class="folder" folderName="${child.name}">
+		<div class="folder" folderName="${child.name}" folderId="${child.id}">
 			<img src="src/assets/images/folder_19026003.png" alt="">
 			<p>${child.name}</p>
 			<div>
@@ -245,13 +246,13 @@ function attachEventsToFolderButtons() {
 
 				table.innerHTML = htmlFileBrowser;
 
-				countStage++;
-				stages.push({ stage: countStage, content: htmlFileBrowser });
+				globalVariables.countStage++;
+				globalVariables.stages.push({ stage: globalVariables.countStage, content: htmlFileBrowser });
 
 				globalVariables.currentFolderName = btn.querySelector("span").innerHTML;
 				globalVariables.currentFolderId = btn.querySelector(".td-folder").getAttribute('folderId');
 
-				if (countStage === 0) {
+				if (globalVariables.countStage === 0) {
 					console.log("to na root")
 				}
 				attachEventsToFolderButtons();
@@ -276,42 +277,44 @@ function attachEventsToFolderButtons() {
 		btnToGoBack.addEventListener('click', toGoBack);
 }
 
-function toGoBack() {
-	countStage--;
+async function toGoBack() {
+	globalVariables.countStage--;
 	const table = document.querySelector(".table");
 
 	let verifyNumberStages = 0;
 
-	stages.forEach(stage => {
-		if (stage.stage === countStage) {
+	globalVariables.stages.forEach(stage => {
+		if (stage.stage === globalVariables.countStage) {
 			verifyNumberStages++;
 		}
 	});
 	
 	if (verifyNumberStages > 0) {
-		const filterStage = stages.filter(item => item.stage === countStage);
+		const filterStage = globalVariables.stages.filter(item => item.stage === globalVariables.countStage);
 		table.innerHTML = filterStage[filterStage.length - 1].content;
 	}
 	else {
-		table.innerHTML = stages[countStage].content;
+		table.innerHTML = globalVariables.stages[globalVariables.countStage].content;
 	}
 
+	await fillInUserFiles();
 	attachEventsToFolderButtons();
 }
 
 async function move(moveRootFolder) {
 
 	let folderNameDefault = "root";
+	let folderIdDefault = globalVariables.currentFolderIdDefault;
 
 	try {
-		validationFileIdAndFolderName(fileId, folderName || folderNameDefault);
+		validationFileIdAndFolderName(globalVariables.fileId, globalVariables.folderName || folderNameDefault);
 
 		if (!moveRootFolder) {
-			folderNameDefault = folderName;
-			console.log(folderNameDefault);
+			folderNameDefault = globalVariables.folderName;
+			folderIdDefault = globalVariables.folderId;
 		}
 
-		const data = await FileStorageService.moveFile(userId, fileId, folderNameDefault);
+		const data = await FileStorageService.moveFile(userId, globalVariables.fileId, folderIdDefault, folderNameDefault);
 
 		if (data.fileId !== null) {
 			closeMessageError();
@@ -339,15 +342,18 @@ function selectFolderForMove(tr) {
 	const folder_structure_select = document.querySelector(".folder-structure-select-folder-for-move-file");
 	const folders = folder_structure_select.querySelectorAll('.folder');
 
+	console.log(tr);
+
 	folders.forEach(folder => {
 		folder.addEventListener('click', () => {
 			closeAllBackgroundColor();
-			folderName = folder.getAttribute('folderName');
+			globalVariables.folderName = folder.getAttribute('folderName');
+			globalVariables.folderId = folder.getAttribute('folderId');
 			folder.classList.add("select-folder");
 		});
 	});
 
-	fileId = tr.querySelector(".td-file").getAttribute('fileId');
+	globalVariables.fileId = tr.querySelector(".td-file").getAttribute('fileId');
 }
 
 function closeAllBackgroundColor() {
@@ -379,7 +385,7 @@ async function newFolder() {
 	let folderName = globalVariables.currentFolderName;
 	let folderId = globalVariables.currentFolderId;
 
-	if (folderName === null && folderId === null || countStage === 0) {
+	if (folderName === null && folderId === null || globalVariables.countStage === 0) {
 		folderName = globalVariables.currentFolderNameDefault;
 		folderId = globalVariables.currentFolderIdDefault;
 	}
@@ -474,5 +480,5 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('DOMContentLoaded', async () => {
 	fillInUserFiles();
-	stages = [{ stage: 0, content: await fillInUserFiles() }];
+	globalVariables.stages = [{ stage: 0, content: await fillInUserFiles() }];
 });
