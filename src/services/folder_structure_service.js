@@ -22,7 +22,6 @@ async function createFolder(folderAdded) {
 	const urlNewFolderName = urlUserId.replace(":newFolderName", folderAdded.newFolderName);
 	const urlFolderId = urlNewFolderName.replace(":folderId", folderAdded.folderId);
 	const url = urlFolderId.replace(":name", folderAdded.folderName);
-
 	const response = await fetch(url, {
 		method: 'GET',
 	});

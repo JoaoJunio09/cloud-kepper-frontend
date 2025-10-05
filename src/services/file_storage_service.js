@@ -1,11 +1,30 @@
 const BASE_URL = "http://localhost:8080";
 
+const API_BASE_URL_UPLOAD = `${BASE_URL}/api/file/v1/uploadFile/:userId/:folderId?folderName=:folderName`;
 const API_BASE_URL_DOWNLOAD_OR_PREVIEW = `${BASE_URL}/api/file/v1/:type/:fileId`;
 const API_BASE_URL_MOVE_FILE_A_OTHER_FOLDER = `${BASE_URL}/api/file/v1/:userId/:fileId/:folderName/:folderId`;
+
+async function upload(formData, userId, folderId, folderName) {
+	const urlUserId = API_BASE_URL_UPLOAD.replace(":userId", userId);
+	const urlFolderId = urlUserId.replace(":folderId", folderId);
+	const url = urlFolderId.replace(":folderName", folderName);
+	const response = await fetch(url, {
+		method: 'POST',
+		body: formData
+	});
+
+	if (!response.ok) {
+		throw new Error("Erro ao realizar upload do arquivo");
+	}
+
+	const data = await response.json();
+	return data;
+}
 
 async function downloadOrPreview(type, fileId) {
 	const urlInitial = API_BASE_URL_DOWNLOAD_OR_PREVIEW.replace(":type", type);
 	const url = urlInitial.replace(":fileId", fileId);
+	console.log(url)
 	const response = await fetch(url, {
 		method: 'GET'
 	});
@@ -37,6 +56,7 @@ async function moveFile(userId, fileId, folderId, folderName) {
 }
 
 export const FileStorageService = {
+	upload,
 	downloadOrPreview,
 	moveFile,
 }

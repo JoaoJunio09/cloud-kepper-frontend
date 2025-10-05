@@ -3,6 +3,7 @@ import { FolderStructure } from "../../services/folder_structure_service.js";
 import { closeMessageError, openMessageError } from "../../utils/message_error.js";
 import { openMessageSuccess } from "../../utils/message_success.js";
 
+const btnUpload = document.querySelector("#btn-upload");
 const btnToGoBack = document.querySelector("#btnToGoBack");
 const btnOpenNewFolder = document.querySelector("#btn-new-folder");
 const btnCloseNewFolder = document.querySelector(".btn-close-new-folder");
@@ -16,8 +17,6 @@ const containerNewFolder = document.querySelector(".container-new-folder");
 const fade = document.querySelector(".fade");
 
 const userId = Number.parseInt(localStorage.getItem('userId'));
-
-let folderName;
 
 let globalVariables = {
 	countStage: 0,
@@ -409,7 +408,6 @@ async function newFolder() {
 		closeNewFolder();
 	}
 	catch (error) {
-		console.log(error);
 		openMessageError(error.message);
 	}
 }
@@ -423,6 +421,32 @@ async function openFile(fileId) {
 	catch (error) {
 		console.log(error);
 	}
+}
+
+async function upload() {
+	const fileInput = document.getElementById("fileInput");
+
+	fileInput.onchange = async (event) => {
+		const file = event.target.files[0];
+
+		if (!file) {
+			openMessageError("Erro ao abrir arquivo");
+			return;
+		}
+
+		const folderId = globalVariables.currentFolderId || globalVariables.currentFolderIdDefault;
+		const folderName = globalVariables.currentFolderName || globalVariables.currentFolderNameDefault;
+
+		const formData = new FormData();
+		formData.append('file', file);
+		
+		await FileStorageService.upload(formData, userId, folderId, folderName);
+		await fillInUserFiles();
+
+		fileInput.value = "";
+	};
+
+	fileInput.click();
 }
 
 function validationNameForNewFolder(name) {
@@ -466,6 +490,7 @@ btnCloseNewFolder.addEventListener('click', closeNewFolder);
 btnCloseSelectMove.addEventListener('click', closeSelectMove);
 btnMoveFile.addEventListener('click',() => move(false));
 btnMoveFileRootFolderDefault.addEventListener('click', () => move(true));
+btnUpload.addEventListener('click', upload);
 
 document.addEventListener('click', (e) => {
 	const file = e.target.closest(".file");
