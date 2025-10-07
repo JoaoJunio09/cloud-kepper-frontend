@@ -28,7 +28,22 @@ let globalVariables = {
 	currentFolderNameDefault: null,
 	currentFolderId: null,
 	currentFolderIdDefault: null,
+	currentChildrenForCurrentFolder: null,
+	childrenForCurrentFolder: null,
 };
+
+function identifyChildrenForCurrentFolder(list, folderName, folderId) {
+	list.forEach(child => {
+		if (child.type === "folder") {
+			if (child.name === folderName && child.id === folderId) {
+				globalVariables.childrenForCurrentFolder = child;
+			}
+			else {
+				identifyChildrenForCurrentFolder(child.children, folderName, folderId);
+			}
+		}
+	});
+}
 
 async function fillInUserFiles() {
 	try {
@@ -36,7 +51,7 @@ async function fillInUserFiles() {
 		const folder_structure_html = document.querySelector(".folder-structure");
 		const folder_structure_html_select_folder_for_move_file = document.querySelector(".folder-structure-select-folder-for-move-file");
 		const table = document.querySelector(".table");
-		
+
 		const { htmlSidebar, htmlFileBrowser } = updatesUserFiles(structure.root.children);
 
 		folder_structure_html.innerHTML = htmlSidebar;
@@ -232,6 +247,11 @@ function attachEventsToFolderButtons() {
 			});
     });
 
+		// EU PRECISO ATUALIZAR O CHILDRENDATA TODA VEZ QUE EU FOR ACESSAR UMA PASTA PELA NAVEGAÇÃO, ISSO POR QUE QUANDO O USUÁRIO FAZER UPLOAD
+		// DE UM ARQUIVO, EU JA ATUALIZO A TABELA, NO ENTANTO, QUANDO EU VOLTO UMA PASTA ANTERIOR, E ACESSO NOVAMENTE A PASTA QUE ESTAVA,
+		// O ARQUIVO NA QUAL EU FIZ O UPLOAD SIMPLESMESNTE SOME, ISSO POR QUE O CHILDREN DATA NÃO ATUALIZOU, O QUE DEVE SER FEITO IMEDIATAMENTE, 
+		// DESSA FORMA ATULIZANDO O CHILDRENDATA DE UMA PASTA SEMPRE QUANDO ELA RECEBER UM NOVO ARQUIVO, ASSIM FICARÁ CONCLUÍDO 100% A
+		// IMPLEMENTAÇÃO DO SERVIÇO DE UPLOAD.
 		btnsOpenChildForBrowser.forEach(btn => {
       btn.addEventListener('click', (e) => {
 				document.querySelector("#btnToGoBack").innerHTML = "Voltar";
@@ -246,14 +266,11 @@ function attachEventsToFolderButtons() {
 				table.innerHTML = htmlFileBrowser;
 
 				globalVariables.countStage++;
-				globalVariables.stages.push({ stage: globalVariables.countStage, content: htmlFileBrowser });
+				globalVariables.stages.push({ stage: globalVariables.countStage, content: htmlFileBrowser, childrenData: childrenData });
 
 				globalVariables.currentFolderName = btn.querySelector("span").innerHTML;
 				globalVariables.currentFolderId = btn.querySelector(".td-folder").getAttribute('folderId');
 
-				if (globalVariables.countStage === 0) {
-					console.log("to na root")
-				}
 				attachEventsToFolderButtons();
 			});
     });
@@ -296,7 +313,6 @@ async function toGoBack() {
 		table.innerHTML = globalVariables.stages[globalVariables.countStage].content;
 	}
 
-	await fillInUserFiles();
 	attachEventsToFolderButtons();
 }
 
@@ -423,7 +439,10 @@ async function openFile(fileId) {
 	}
 }
 
-async function upload() {
+async function upload(e) {
+
+	console.log(globalVariables.stages[globalVariables.stages.length - 1]);
+
 	const fileInput = document.getElementById("fileInput");
 
 	fileInput.onchange = async (event) => {
@@ -439,14 +458,32 @@ async function upload() {
 
 		const formData = new FormData();
 		formData.append('file', file);
-		
+
 		await FileStorageService.upload(formData, userId, folderId, folderName);
-		await fillInUserFiles();
+		
+		const structure = await readJsonFromFolderStructureByUserId(userId);
+
+		identifyChildrenForCurrentFolder(structure.root.children, folderName, folderId);
+		const folder = globalVariables.childrenForCurrentFolder;
+
+		console.log(globalVariables.stages[globalVariables.stages.length - 1].childrenData)
+		globalVariables.stages[globalVariables.stages.length - 1].childrenData = folder.children;
+		console.log(globalVariables.stages[globalVariables.stages.length - 1].childrenData)
+
+		const table = document.querySelector(".table");
+		
+		const { htmlFileBrowser } = updatesUserFiles(globalVariables.stages[globalVariables.stages.length - 1].childrenData);
+
+		table.innerHTML = htmlFileBrowser;
 
 		fileInput.value = "";
 	};
 
 	fileInput.click();
+}
+
+function accessTheUploadedFolder(folder) {
+	console.log(folder);
 }
 
 function validationNameForNewFolder(name) {
@@ -490,7 +527,9 @@ btnCloseNewFolder.addEventListener('click', closeNewFolder);
 btnCloseSelectMove.addEventListener('click', closeSelectMove);
 btnMoveFile.addEventListener('click',() => move(false));
 btnMoveFileRootFolderDefault.addEventListener('click', () => move(true));
-btnUpload.addEventListener('click', upload);
+btnUpload.addEventListener('click', (e) => {
+	upload(e);
+});
 
 document.addEventListener('click', (e) => {
 	const file = e.target.closest(".file");
@@ -504,6 +543,6 @@ document.addEventListener('click', (e) => {
 })
 
 document.addEventListener('DOMContentLoaded', async () => {
-	fillInUserFiles();
+	fillInUserFiles(undefined);
 	globalVariables.stages = [{ stage: 0, content: await fillInUserFiles() }];
 });
