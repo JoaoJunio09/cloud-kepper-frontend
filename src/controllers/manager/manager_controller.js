@@ -30,20 +30,8 @@ let globalVariables = {
 	currentFolderIdDefault: null,
 	currentChildrenForCurrentFolder: null,
 	childrenForCurrentFolder: null,
+	currentStage: null,
 };
-
-function identifyChildrenForCurrentFolder(list, folderName, folderId) {
-	list.forEach(child => {
-		if (child.type === "folder") {
-			if (child.name === folderName && child.id === folderId) {
-				globalVariables.childrenForCurrentFolder = child;
-			}
-			else {
-				identifyChildrenForCurrentFolder(child.children, folderName, folderId);
-			}
-		}
-	});
-}
 
 async function fillInUserFiles() {
 	try {
@@ -253,20 +241,31 @@ function attachEventsToFolderButtons() {
 		// DESSA FORMA ATULIZANDO O CHILDRENDATA DE UMA PASTA SEMPRE QUANDO ELA RECEBER UM NOVO ARQUIVO, ASSIM FICARÁ CONCLUÍDO 100% A
 		// IMPLEMENTAÇÃO DO SERVIÇO DE UPLOAD.
 		btnsOpenChildForBrowser.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', async (e) => {
 				document.querySelector("#btnToGoBack").innerHTML = "Voltar";
 
 				const table = document.querySelector(".table");
 
-				const childrenData = btn.getAttribute('data-children');
-				const children = childrenData ? JSON.parse(childrenData) : [];
+				const folderId = btn.querySelector(".td-folder").getAttribute('folderId');
+				const structure = await readJsonFromFolderStructureByUserId(userId);
+				const folder = findFolderByIdAndName(structure.root.children, folderId, btn.querySelector("span").innerHTML);
+				const children = folder?.children || [];
 		
 				const { htmlFileBrowser } = updatesUserFiles(children);
 
 				table.innerHTML = htmlFileBrowser;
 
 				globalVariables.countStage++;
-				globalVariables.stages.push({ stage: globalVariables.countStage, content: htmlFileBrowser, childrenData: childrenData });
+
+				globalVariables.stages.push({ 
+					stage: globalVariables.countStage, 
+					content: htmlFileBrowser, 
+					childrenData: children, 
+					folderId: btn.querySelector(".td-folder").getAttribute('folderId'),
+					folderName: btn.querySelector("span").innerHTML
+				});
+
+				console.log(globalVariables.stages);
 
 				globalVariables.currentFolderName = btn.querySelector("span").innerHTML;
 				globalVariables.currentFolderId = btn.querySelector(".td-folder").getAttribute('folderId');
@@ -294,6 +293,7 @@ function attachEventsToFolderButtons() {
 }
 
 async function toGoBack() {
+
 	globalVariables.countStage--;
 	const table = document.querySelector(".table");
 
@@ -441,8 +441,6 @@ async function openFile(fileId) {
 
 async function upload(e) {
 
-	console.log(globalVariables.stages[globalVariables.stages.length - 1]);
-
 	const fileInput = document.getElementById("fileInput");
 
 	fileInput.onchange = async (event) => {
@@ -460,21 +458,23 @@ async function upload(e) {
 		formData.append('file', file);
 
 		await FileStorageService.upload(formData, userId, folderId, folderName);
-		
-		const structure = await readJsonFromFolderStructureByUserId(userId);
 
-		identifyChildrenForCurrentFolder(structure.root.children, folderName, folderId);
-		const folder = globalVariables.childrenForCurrentFolder;
+		 if (globalVariables.countStage === 0) {
+      await fillInUserFiles();
+    } 
+		else {
+      const currentStage = globalVariables.stages.find(
+        (s) => s.folderId === folderId && s.folderName === folderName
+      );
 
-		console.log(globalVariables.stages[globalVariables.stages.length - 1].childrenData)
-		globalVariables.stages[globalVariables.stages.length - 1].childrenData = folder.children;
-		console.log(globalVariables.stages[globalVariables.stages.length - 1].childrenData)
-
-		const table = document.querySelector(".table");
-		
-		const { htmlFileBrowser } = updatesUserFiles(globalVariables.stages[globalVariables.stages.length - 1].childrenData);
-
-		table.innerHTML = htmlFileBrowser;
+      if (currentStage) {
+        await updateFilesInFolder(currentStage);
+      } 
+			else {
+        const stage = globalVariables.stages[globalVariables.stages.length - 1];
+        await updateFilesInFolder(stage);
+      }
+    }
 
 		fileInput.value = "";
 	};
@@ -482,8 +482,85 @@ async function upload(e) {
 	fileInput.click();
 }
 
-function accessTheUploadedFolder(folder) {
-	console.log(folder);
+async function updateFilesInFolder(currentStage) {
+  try {
+    const structure = await readJsonFromFolderStructureByUserId(userId);
+
+    const folderUpdated = findFolderByIdAndName(
+      structure.root.children, 
+      currentStage.folderId,
+      currentStage.folderName
+    );
+
+    if (!folderUpdated) {
+      console.warn("Pasta não encontrada na estrutura atualizada.");
+      return;
+    }
+
+    const { htmlSidebarNot, htmlFileBrowser } = updatesUserFiles(folderUpdated.children || []);
+    const { htmlSidebar, htmlFileBrowserNot } = updatesUserFiles(structure.root.children);
+
+    // 🔹 Atualiza apenas os dados da pasta atual
+    currentStage.content = htmlFileBrowser;
+    currentStage.childrenData = JSON.stringify(folderUpdated.children || []);
+    globalVariables.currentStage = folderUpdated;
+
+    const index = globalVariables.stages.findIndex(s => s.stage === currentStage.stage);
+    if (index !== -1) {
+      globalVariables.stages[index] = {
+        ...globalVariables.stages[index],
+        content: htmlFileBrowser,
+        childrenData: JSON.stringify(folderUpdated.children || []),
+      };
+    }
+
+    // 🔹 Atualiza somente a tabela atual (sem recarregar tudo)
+    const table = document.querySelector(".table");
+    table.innerHTML = htmlFileBrowser;
+
+    // 🔹 Atualiza a sidebar, mas SEM resetar a navegação
+    const folder_structure_html = document.querySelector(".folder-structure");
+    const folder_structure_html_select_folder_for_move_file = document.querySelector(".folder-structure-select-folder-for-move-file");
+
+    // Recria apenas o HTML da árvore
+    folder_structure_html.innerHTML = htmlSidebar;
+    folder_structure_html_select_folder_for_move_file.innerHTML = htmlSidebar;
+
+    // 🔹 Mantém o contexto da pasta atual
+    globalVariables.currentFolderId = folderUpdated.id;
+    globalVariables.currentFolderName = folderUpdated.name;
+
+    // 🔹 Atualiza data-children do botão correspondente
+    const btnFolder = document.querySelector(`.td-folder[folderId="${currentStage.folderId}"]`)
+      ?.closest(".btnOpenChildrenForFolderBrowser");
+
+    if (btnFolder) {
+      btnFolder.setAttribute('data-children', JSON.stringify(folderUpdated.children || []));
+    }
+
+    // 🔹 Reanexa eventos
+    attachEventsToFolderButtons();
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+function findFolderByIdAndName(list, folderId, folderName) {
+	for (const child of list) {
+		if (child.type === "folder") {
+			if (child.id === folderId && child.name === folderName) {
+				return child;
+			}
+
+			if (Array.isArray(child.children)) {
+				const found = findFolderByIdAndName(child.children, folderId, folderName);
+				if (found) return found;
+			}
+		}
+	}
+	return null;
 }
 
 function validationNameForNewFolder(name) {
