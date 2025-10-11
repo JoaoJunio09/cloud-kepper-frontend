@@ -244,13 +244,13 @@ font-family: "Roboto", sans-serif;
     filter: var(--filter-folder-img);
 }
 
-.management-content-header-options button:nth-child(3) {
+.management-content-header-options button:nth-child(4) {
     border: 1px solid #ffffff0e;
     background-color: var(--bg-color-button-option-delete);
     border-bottom: 1px solid rgb(248, 12, 12);
 }
 
-.management-content-header-options button:nth-child(3):hover {
+.management-content-header-options button:nth-child(4):hover {
     background-color: transparent;
     border: 1px solid #161616;
     color: var(--text-color-hover-button-option);
