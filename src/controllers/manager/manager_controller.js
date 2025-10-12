@@ -64,7 +64,15 @@ async function fillInUserFiles() {
 function updatesUserFiles(list) {
 
 	let htmlSidebar = "";
-	let htmlFileBrowser = "";
+	let htmlFileBrowser = `
+		<thead align="left">
+			<tr>
+				<th>Name</th>
+				<th>Last Modified</th>
+				<th></th>
+			</tr>
+		</thead>
+	`;
 
 	list.forEach(child => {
 		if (child.type === "folder") {
@@ -125,7 +133,7 @@ function createElementHTMLFile(child) {
 					${child.name}
 				</div>
 			</td>
-			<td>9:45 AM</td>
+			<td>${child.datetime}</td>
 			<td class="td-options">
 				<img src="src/assets/icons/elipse.png" alt="others" id="btn-options">
 				<div class="container-options">
@@ -182,7 +190,7 @@ function createElementHTMLFolder(child) {
 					<span>${child.name}</span>
 				</div>
 			</td>
-			<td>9:45 AM</td>
+			<td>${child.datetime}</td>
 			<td class="td-options">
 				<img src="src/assets/icons/elipse.png" alt="others" id="btn-options">
 				<div class="container-options">
@@ -235,11 +243,6 @@ function attachEventsToFolderButtons() {
 			});
     });
 
-		// EU PRECISO ATUALIZAR O CHILDRENDATA TODA VEZ QUE EU FOR ACESSAR UMA PASTA PELA NAVEGAÇÃO, ISSO POR QUE QUANDO O USUÁRIO FAZER UPLOAD
-		// DE UM ARQUIVO, EU JA ATUALIZO A TABELA, NO ENTANTO, QUANDO EU VOLTO UMA PASTA ANTERIOR, E ACESSO NOVAMENTE A PASTA QUE ESTAVA,
-		// O ARQUIVO NA QUAL EU FIZ O UPLOAD SIMPLESMESNTE SOME, ISSO POR QUE O CHILDREN DATA NÃO ATUALIZOU, O QUE DEVE SER FEITO IMEDIATAMENTE, 
-		// DESSA FORMA ATULIZANDO O CHILDRENDATA DE UMA PASTA SEMPRE QUANDO ELA RECEBER UM NOVO ARQUIVO, ASSIM FICARÁ CONCLUÍDO 100% A
-		// IMPLEMENTAÇÃO DO SERVIÇO DE UPLOAD.
 		btnsOpenChildForBrowser.forEach(btn => {
       btn.addEventListener('click', async (e) => {
 				document.querySelector("#btnToGoBack").innerHTML = "Voltar";
@@ -331,16 +334,15 @@ async function move(moveRootFolder) {
 			folderIdDefault = globalVariables.folderId;
 		}
 
-		const data = await FileStorageService.moveFile(userId, globalVariables.fileId, folderIdDefault, folderNameDefault);
+		await FileStorageService.moveFile(userId, globalVariables.fileId, folderIdDefault, folderNameDefault);
 
-		if (data.fileId !== null) {
-			closeMessageError();
-			closeSelectMove();
-			globalVariables.stages = [{	
-				stage: 0, 
-				content: await fillInUserFiles().then(globalVariables.countStage = 0)
-			}];
-		}
+		closeMessageError();
+		closeSelectMove();
+
+		globalVariables.stages = [{	
+		stage: 0, 
+			content: await fillInUserFiles().then(globalVariables.countStage = 0)
+		}];
 	}
 	catch (error) {
 		openMessageError(error.message);
