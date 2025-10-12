@@ -56,6 +56,7 @@ async function fillInUserFiles() {
 		attachEventsToFolderButtons();
 
 		globalVariables.fillInTheAttributesOnce++;
+		console.log(table.innerHTML);
 		return table.innerHTML;
 	}
 	catch (error) {
@@ -107,17 +108,23 @@ function createElementHTMLFile(child) {
 		case "image/jpeg":
 			imgFileType = "<img src='src/assets/icons/pjg.png' alt='file-type'>";
 			break;
-		case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-			imgFileType = "<img src='src/assets/icons/doc.png' alt='file-type'>";
-			break;
 		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
 			imgFileType = "<img src='src/assets/icons/doc.png' alt='file-type'>";
 			break;
 		case "application/pdf":
 			imgFileType = "<img src='src/assets/icons/pdf.png' alt='file-type'>";
 			break;
+		case "video/mp4":
+			imgFileType = "<img src='src/assets/icons/mp4.png' alt='file-type'>";
+			break;
+		case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+			imgFileType = "<img src='src/assets/icons/xls-file.png' alt='file-type'>";
+			break;
+		case "application/x-zip-compressed":
+			imgFileType = "<img src='src/assets/icons/zip.png' alt='file-type'>";
+			break;
 		default:
-			imgFileType = "<img src='src/assets/icons/arquivo (1).png' alt='file-type' class='file-default'>";
+			imgFileType = "<img src='src/assets/icons/file.png' alt='file-type' class='file-default'>";
 	}
 
 	const elementHtmlFileSidebar = `
@@ -135,7 +142,7 @@ function createElementHTMLFile(child) {
 					${child.name}
 				</div>
 			</td>
-			<td>${child.datetime}</td>
+			<td class="td-datetime">${child.datetime}</td>
 			<td class="td-options">
 				<img src="src/assets/icons/elipse.png" alt="others" id="btn-options">
 				<div class="container-options">
@@ -175,7 +182,7 @@ function createElementHTMLFolder(child) {
 
 	childrenHtmlFileSidebar = `
 		<div class="folder" folderName="${child.name}" folderId="${child.id}">
-			<img src="src/assets/images/folder_19026003.png" alt="">
+			<img src="src/assets/icons/folder (1).png" alt="" class="folder-style-browser">
 			<p>${child.name}</p>
 			<div>
 				<img src="src/assets/icons/down-arrow.png" alt="" class="btnOpenChildrenForFolder">
@@ -188,11 +195,11 @@ function createElementHTMLFolder(child) {
 		<tr class="tr-file-or-folder">
 			<td class="btnOpenChildrenForFolderBrowser" data-children='${JSON.stringify(child.children || [])}'>
 				<div class="td-folder" folderId="${child.id}">
-					<img src="src/assets/images/folder_19026003.png" alt="" class="folder-style-browser">
+					<img src="src/assets/icons/folder (1).png" alt="" class="folder-style-browser">
 					<span>${child.name}</span>
 				</div>
 			</td>
-			<td>${child.datetime}</td>
+			<td class="td-datetime">${child.datetime}</td>
 			<td class="td-options">
 				<img src="src/assets/icons/elipse.png" alt="others" id="btn-options">
 				<div class="container-options">

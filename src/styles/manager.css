@@ -8,12 +8,14 @@ font-family: "Roboto", sans-serif;
 
 .body {
     background-color: var(--bg-color-body-manager);
+    overflow-y: auto;
 }
 
 .main {
-    position: fixed;
     display: flex;
+    justify-content: center;
     flex-direction: column;
+    height: 100%;
     width: 100%;
 }
 
@@ -94,10 +96,6 @@ font-family: "Roboto", sans-serif;
     width: 15px;
 }
 
-.folder img {
-    filter: var(--filter-folder-img);
-}
-
 .folder, .file p {
   font-family: "Poppins", sans-serif;
   color: var(--text-color);
@@ -122,10 +120,6 @@ font-family: "Roboto", sans-serif;
 
 .show-child {
     display: flex !important;
-}
-
-.file-default {
-    filter: var(--filter-folder-img);
 }
 
 .options-user {
@@ -311,14 +305,15 @@ tbody tr td:nth-child(3) img {
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    font-size: .7rem;
+}
+
+.td-datetime {
+    font-size: .7rem;
 }
 
 .td-options {
     position: relative;
-}
-
-.folder-style-browser {
-    filter: var(--filter-folder-img);
 }
 
 .container-new-folder {
@@ -557,7 +552,7 @@ tbody tr td:nth-child(3) img {
 
     .main {
         flex-direction: row;
-    }
+    }    
 
     .menu-bar-vertical {
         width: 28%;
@@ -565,6 +560,14 @@ tbody tr td:nth-child(3) img {
 
     .management-content {
         width: 72%;
+    }
+
+    .td-file, .td-folder {
+        font-size: .9rem;
+    }
+
+    .td-datetime {
+        font-size: .9rem;
     }
 
 }
