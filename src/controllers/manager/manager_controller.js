@@ -31,6 +31,8 @@ let globalVariables = {
 	currentChildrenForCurrentFolder: null,
 	childrenForCurrentFolder: null,
 	currentStage: null,
+	folderOrFileMove: null,
+	folderIdMove: null,
 };
 
 async function fillInUserFiles() {
@@ -183,7 +185,7 @@ function createElementHTMLFolder(child) {
 	`;
 
 	childrenHtmlFileBrowser = `
-		<tr>
+		<tr class="tr-file-or-folder">
 			<td class="btnOpenChildrenForFolderBrowser" data-children='${JSON.stringify(child.children || [])}'>
 				<div class="td-folder" folderId="${child.id}">
 					<img src="src/assets/images/folder_19026003.png" alt="" class="folder-style-browser">
@@ -327,15 +329,20 @@ async function move(moveRootFolder) {
 	let folderIdDefault = globalVariables.currentFolderIdDefault;
 
 	try {
-		validationFileIdAndFolderName(globalVariables.fileId, globalVariables.folderName || folderNameDefault);
+		validationFileIdAndFolderName(globalVariables.folderName || folderNameDefault);
 
 		if (!moveRootFolder) {
 			folderNameDefault = globalVariables.folderName;
 			folderIdDefault = globalVariables.folderId;
 		}
 
-		await FileStorageService.moveFile(userId, globalVariables.fileId, folderIdDefault, folderNameDefault);
-
+		if (globalVariables.folderOrFileMove === "file") {
+			await FileStorageService.moveFile(userId, globalVariables.fileId, folderIdDefault, folderNameDefault);
+		}
+		else if (globalVariables.folderOrFileMove === "folder") {
+			await FolderStructure.moveFolder(userId, globalVariables.folderIdMove, folderIdDefault);
+		}
+		
 		closeMessageError();
 		closeSelectMove();
 
@@ -349,22 +356,24 @@ async function move(moveRootFolder) {
 	}
 }
 
-function validationFileIdAndFolderName(fileId, folderName) {
+function validationFileIdAndFolderName(folderName) {
 	let message_error = (localStorage.getItem('lang') === "pt") 
-		? "Id do arquivo ou nome da pasta são nulos"
-		: "File Id or Folder Name is null";
-	if (fileId === null || folderName === null || fileId === undefined || folderName === undefined) {
+		? "Nome da pasta são nulos"
+		: "Folder Name is null";
+
+	if (folderName === null || folderName === undefined) {
 		throw new Error(message_error);
 	}
 }
 
 function selectFolderForMove(tr) {
+
+	globalVariables.folderOrFileMove = (tr.querySelector(".td-folder")) ? 'folder' : 'file';
+
 	openSelectMove();
 
 	const folder_structure_select = document.querySelector(".folder-structure-select-folder-for-move-file");
 	const folders = folder_structure_select.querySelectorAll('.folder');
-
-	console.log(tr);
 
 	folders.forEach(folder => {
 		folder.addEventListener('click', () => {
@@ -375,7 +384,12 @@ function selectFolderForMove(tr) {
 		});
 	});
 
-	globalVariables.fileId = tr.querySelector(".td-file").getAttribute('fileId');
+	if (globalVariables.folderOrFileMove === "file") {
+		globalVariables.fileId = tr.querySelector(".td-file").getAttribute('fileId');
+	}
+	else {
+		globalVariables.folderIdMove = tr.querySelector(".td-folder").getAttribute('folderId');
+	}
 }
 
 function closeAllBackgroundColor() {
@@ -605,7 +619,7 @@ btnCreateNewFolder.addEventListener('click', newFolder);
 btnOpenNewFolder.addEventListener('click', openNewFolder);
 btnCloseNewFolder.addEventListener('click', closeNewFolder);
 btnCloseSelectMove.addEventListener('click', closeSelectMove);
-btnMoveFile.addEventListener('click',() => move(false));
+btnMoveFile.addEventListener('click', () => move(false));
 btnMoveFileRootFolderDefault.addEventListener('click', () => move(true));
 btnUpload.addEventListener('click', (e) => {
 	upload(e);

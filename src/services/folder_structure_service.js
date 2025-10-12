@@ -2,6 +2,7 @@ const BASE_URL = "http://localhost:8080";
 
 const API_BASE_URL_GETFOLDERSTRUCTURE = `${BASE_URL}/api/folderStructure/v1/:userId`;
 const API_BASE_URL_CREATEFOLDER = `${BASE_URL}/api/folderStructure/v1/:userId/:newFolderName/:folderId?folderName=:name`;
+const API_BASE_URL_MOVE_FOLDER = `${BASE_URL}/api/folderStructure/v1/moveFolder/:userId/:folderId/:currentFolderId`;
 
 async function getFolderStructure(userId) {
 	const url = API_BASE_URL_GETFOLDERSTRUCTURE.replace(":userId", userId);
@@ -34,7 +35,24 @@ async function createFolder(folderAdded) {
 	return data;
 }
 
+async function moveFolder(userId, folderId, currentFolderId) {
+	const urlUserId = API_BASE_URL_MOVE_FOLDER.replace(":userId", userId);
+	const urlFolderId = urlUserId.replace(":folderId", folderId);
+	const url = urlFolderId.replace(":currentFolderId", currentFolderId);
+	const response = await fetch(url, {
+		method: 'GET',
+	});
+
+	if (!response.ok) {
+		throw new Error("Erro ao criar nova pasta");
+	}
+
+	const data = await response.json();
+	return data;
+}
+
 export const FolderStructure = {
 	getFolderStructure,
 	createFolder,
+	moveFolder,
 }
