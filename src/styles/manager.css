@@ -21,14 +21,16 @@ font-family: "Roboto", sans-serif;
 
 .menu-bar-vertical {
     width: 100%;
+    max-height: 700px;
     border-right: var(--border-manager);
+    box-shadow: var(--box-shadow-menu-bar-vertical);
 }
 
 .management-content {
     width: 100%;
 }
 
-.menu-bar-vertical, .management-content, .main {
+.management-content {
     height: 100%;
 }
 
@@ -66,7 +68,6 @@ font-family: "Roboto", sans-serif;
 .folder-structure {
     padding-top: 20px;
     padding-bottom: 10px;
-    height: 500px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -548,7 +549,15 @@ tbody tr td:nth-child(3) img {
     background-color: transparent;
 }
 
+.arrow {
+    filter: var(--filter-folder-img);
+}
+
 @media(min-width: 1000px) {
+
+    .body {
+        overflow: hidden;
+    }
 
     .main {
         flex-direction: row;
@@ -556,6 +565,7 @@ tbody tr td:nth-child(3) img {
 
     .menu-bar-vertical {
         width: 28%;
+        height: 100%;
     }
 
     .management-content {

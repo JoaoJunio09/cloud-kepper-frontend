@@ -1,7 +1,6 @@
 import { FileStorageService } from "../../services/file_storage_service.js";
 import { FolderStructure } from "../../services/folder_structure_service.js";
 import { closeMessageError, openMessageError } from "../../utils/message_error.js";
-import { openMessageSuccess } from "../../utils/message_success.js";
 
 const btnUpload = document.querySelector("#btn-upload");
 const btnToGoBack = document.querySelector("#btnToGoBack");
@@ -56,7 +55,6 @@ async function fillInUserFiles() {
 		attachEventsToFolderButtons();
 
 		globalVariables.fillInTheAttributesOnce++;
-		console.log(table.innerHTML);
 		return table.innerHTML;
 	}
 	catch (error) {
@@ -185,7 +183,7 @@ function createElementHTMLFolder(child) {
 			<img src="src/assets/icons/folder (1).png" alt="" class="folder-style-browser">
 			<p>${child.name}</p>
 			<div>
-				<img src="src/assets/icons/down-arrow.png" alt="" class="btnOpenChildrenForFolder">
+				<img src="src/assets/icons/down-arrow.png" alt="" class="btnOpenChildrenForFolder arrow">
 			</div>
 		</div>
 		${childrenHtmlFileSidebar}
@@ -528,8 +526,8 @@ async function updateFilesInFolder(currentStage) {
       return;
     }
 
-    const { htmlSidebarNot, htmlFileBrowser } = updatesUserFiles(folderUpdated.children || []);
-    const { htmlSidebar, htmlFileBrowserNot } = updatesUserFiles(structure.root.children);
+    const { htmlFileBrowser } = updatesUserFiles(folderUpdated.children || []);
+    const { htmlSidebar } = updatesUserFiles(structure.root.children);
 
     currentStage.content = htmlFileBrowser;
     currentStage.childrenData = JSON.stringify(folderUpdated.children || []);
@@ -564,7 +562,6 @@ async function updateFilesInFolder(currentStage) {
     }
 
     attachEventsToFolderButtons();
-
   } catch (error) {
     console.log(error);
   }
@@ -628,9 +625,7 @@ btnCloseNewFolder.addEventListener('click', closeNewFolder);
 btnCloseSelectMove.addEventListener('click', closeSelectMove);
 btnMoveFile.addEventListener('click', () => move(false));
 btnMoveFileRootFolderDefault.addEventListener('click', () => move(true));
-btnUpload.addEventListener('click', (e) => {
-	upload(e);
-});
+btnUpload.addEventListener('click', (e) => upload(e));
 
 document.addEventListener('click', (e) => {
 	const file = e.target.closest(".file");

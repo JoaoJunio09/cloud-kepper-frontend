@@ -75,6 +75,7 @@ a {
     --bg-color-container-new-folder: rgb(230, 230, 230);
     --bg-color-input-new-folder: rgb(227, 227, 227);
     --bg-color-select-move: rgb(248, 248, 248);
+    --box-shadow-menu-bar-vertical: 0px 0px 50px rgba(0, 0, 0, 0.055);
 }
 
 .theme-dark {
@@ -109,4 +110,5 @@ a {
     --bg-color-container-new-folder: rgb(14, 0, 29);
     --bg-color-input-new-folder: #ffffff09;
     --bg-color-select-move: rgb(28, 31, 36);
+    --box-shadow-menu-bar-vertical: 0px 0px 50px rgb(31, 31, 31);
 }
