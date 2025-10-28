@@ -32,6 +32,8 @@ let globalVariables = {
 	currentStage: null,
 	folderOrFileMove: null,
 	folderIdMove: null,
+	navigationForName: [],
+	stringNavigationForName: "",
 };
 
 async function fillInUserFiles() {
@@ -275,10 +277,13 @@ function attachEventsToFolderButtons() {
 					folderName: btn.querySelector("span").innerHTML
 				});
 
-				console.log(globalVariables.countStage);
-
 				globalVariables.currentFolderName = btn.querySelector("span").innerHTML;
 				globalVariables.currentFolderId = btn.querySelector(".td-folder").getAttribute('folderId');
+
+				console.log(globalVariables.stages);
+
+				globalVariables.navigationForName.push(btn.querySelector("span").innerHTML);
+				formatsNavigationString();
 
 				attachEventsToFolderButtons();
 			});
@@ -302,6 +307,29 @@ function attachEventsToFolderButtons() {
 		btnToGoBack.addEventListener('click', toGoBack);
 }
 
+function formatsNavigationString() {
+	const htmlNavigationForName = document.querySelector(".navigation-for-name");
+	let string = "";
+	const stringHome = "home/";
+
+	globalVariables.navigationForName.forEach(text => {
+		string += text + "/";
+	});
+	globalVariables.stringNavigationForName = stringHome + string;
+
+	htmlNavigationForName.innerHTML = globalVariables.stringNavigationForName; 
+
+	formatColorInStringNavigation();
+}
+
+function formatColorInStringNavigation() {
+	const htmlNavigationForName = document.querySelector(".navigation-for-name");
+	const lastName = globalVariables.navigationForName[globalVariables.navigationForName.length - 1];
+
+	let text = htmlNavigationForName.innerHTML.replaceAll("/", " ");
+	console.log(text);
+}
+
 async function toGoBack() {
 
 	globalVariables.countStage--;
@@ -315,11 +343,11 @@ async function toGoBack() {
 		}
 	});
 
-	console.log(globalVariables.stages);
-
 	if (verifyNumberStages > 0) {
 		const filterStage = globalVariables.stages.filter(item => item.stage === globalVariables.countStage);
 		table.innerHTML = filterStage[filterStage.length - 1].content;
+		globalVariables.navigationForName.pop();
+		formatsNavigationString();
 	}
 	else {
 		table.innerHTML = globalVariables.stages[0].content;

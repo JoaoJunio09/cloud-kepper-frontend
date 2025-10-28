@@ -553,6 +553,18 @@ tbody tr td:nth-child(3) img {
     filter: var(--filter-folder-img);
 }
 
+.navigation-for-name {
+    margin-top: 20px;
+    font-family: "Poppins", sans-serif;
+    color: #7f7e7e;
+    font-size: .8rem;
+    opacity: 1;
+}
+
+.style-text-navigation-for-name {
+    font-weight: bold;
+}
+
 @media(min-width: 1000px) {
 
     .body {
