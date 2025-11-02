@@ -280,8 +280,6 @@ function attachEventsToFolderButtons() {
 				globalVariables.currentFolderName = btn.querySelector("span").innerHTML;
 				globalVariables.currentFolderId = btn.querySelector(".td-folder").getAttribute('folderId');
 
-				console.log(globalVariables.stages);
-
 				globalVariables.navigationForName.push(btn.querySelector("span").innerHTML);
 				formatsNavigationString();
 
@@ -300,7 +298,6 @@ function attachEventsToFolderButtons() {
 
 		trFileOrFolder.forEach(tr => {
 			const btnMove = tr.querySelector("#btn-move-for-options");
-
 			btnMove.addEventListener('click', () => selectFolderForMove(tr));
 		})
 
@@ -318,16 +315,6 @@ function formatsNavigationString() {
 	globalVariables.stringNavigationForName = stringHome + string;
 
 	htmlNavigationForName.innerHTML = globalVariables.stringNavigationForName; 
-
-	formatColorInStringNavigation();
-}
-
-function formatColorInStringNavigation() {
-	const htmlNavigationForName = document.querySelector(".navigation-for-name");
-	const lastName = globalVariables.navigationForName[globalVariables.navigationForName.length - 1];
-
-	let text = htmlNavigationForName.innerHTML.replaceAll("/", " ");
-	console.log(text);
 }
 
 async function toGoBack() {
@@ -411,9 +398,19 @@ function selectFolderForMove(tr) {
 	folders.forEach(folder => {
 		folder.addEventListener('click', () => {
 			closeAllBackgroundColor();
+
 			globalVariables.folderName = folder.getAttribute('folderName');
 			globalVariables.folderId = folder.getAttribute('folderId');
+
 			folder.classList.add("select-folder");
+
+			if (globalVariables.folderId === tr.querySelector(".td-folder").getAttribute('folderId')) {
+				let message_error = (localStorage.getItem('language') === "pt")
+					? "Você não pode selecionar a mesma pasta"
+					: "You cannot select the same folder.";
+				openMessageError(message_error);
+				return;
+			}
 		});
 	});
 
