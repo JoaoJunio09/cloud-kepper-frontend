@@ -358,7 +358,7 @@ async function move(moveRootFolder) {
 
 		if (globalVariables.folderOrFileMove === "file") {
 			await FileStorageService.moveFile(userId, globalVariables.fileId, folderIdDefault, folderNameDefault);
-		}
+		} 
 		else if (globalVariables.folderOrFileMove === "folder") {
 			await FolderStructure.moveFolder(userId, globalVariables.folderIdMove, folderIdDefault);
 		}
