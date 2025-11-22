@@ -1,7 +1,7 @@
 const BASE_URL = "http://localhost:8080";
 
-const API_BASE_URL_FINDALL = `${BASE_URL}/api/user/v1`;
-const API_BASE_URL_CREATE = `${BASE_URL}/api/user/v1`;
+const API_BASE_URL_FINDALL = `${BASE_URL}/api/person/v1`;
+const API_BASE_URL_CREATE = `${BASE_URL}/api/person/v1`;
 
 async function findAll() {
 	const response = await fetch(API_BASE_URL_FINDALL, {
@@ -16,15 +16,17 @@ async function findAll() {
 	return data;
 }
 
-async function create(user) {
+async function create(person) {
 	const response = await fetch(API_BASE_URL_CREATE, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'body': JSON.stringify(user)
+			'body': JSON.stringify(person)
 		},
-		body: JSON.stringify(user)
+		body: JSON.stringify(person)
 	});
+
+	console.log(response);
 
 	if (!response.ok) {
 		throw new Error("Erro ao cadastrar usuário");
@@ -34,7 +36,7 @@ async function create(user) {
 	return data;
 }
 
-export const UserService = {
+export const PersonService = {
 	findAll,
 	create
 };

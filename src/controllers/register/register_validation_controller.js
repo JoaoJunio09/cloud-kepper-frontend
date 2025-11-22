@@ -1,20 +1,18 @@
-import { UserService } from "../../services/user_service.js";
+import { PersonService } from "../../services/person_service.js";
 import { closeMessageError, openMessageError } from "../../utils/message_error.js";
 import { openMessageSuccess } from "../../utils/message_success.js";
 
 const btnRegister = document.querySelector("#btnRegister");
 
-class User {
+class Person {
 	name;
 	surname;
 	email;
-	password;
 
-	constructor(name, surname, email, password) {
+	constructor(name, surname, email) {
 		this.name = name;
 		this.surname = surname,
-		this.email = email,
-		this.password = password
+		this.email = email
 	}
 
 	setName(name) { this.name = name; }
@@ -25,38 +23,32 @@ class User {
 	
 	setEmail(email) { this.email = email; }
 	getEmail() { return this.email; }
-
-	setPassword(password) { this.password = password }
-	getPassword() { return this.password; }
 }
 
 async function register() {
 	const name     = document.querySelector("#name").value;
 	const surname  = document.querySelector("#surname").value;
 	const email    = document.querySelector("#email").value;
-	const password = document.querySelector("#password").value;
 
 	try {
-		const user = new User(name, surname, email, password);
+		const person = new Person(name, surname, email, password);
 
-		dataValidationForRegister(user);
+		dataValidationForRegister(person);
 		closeMessageError();
 
-		const saveUser = {
+		const savePerson = {
 			id: null,
-			firstName: user.name,
-			lastName: user.surname,
-			email: user.email,
-			password: user.password,
-			enabled: true
+			firstName: person.name,
+			lastName: person.surname,
+			email: person.email
 		};
 
-		const userSaved = await UserService.create(saveUser);
+		const personSaved = await PersonService.create(savePerson);
 
-		if (userSaved == null || userSaved == undefined) {
+		if (personSaved == null || personSaved == undefined) {
 			const interval_server_error_message = (localStorage.getItem('lang') === "pt") 
-				? "Não foi possível registrar usuário"
-				: "Unable to register user";
+				? "Não foi possível registrar a pessoa"
+				: "Unable to register person";
 			openMessageError(interval_server_error_message);
 		}
 
@@ -98,12 +90,12 @@ function dataValidationForRegister(user) {
 	var __regex_password = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/;
 	var password_valid = __regex_password.test(user.password);
 
-	if (!password_valid) {
-		let message_error_password = (localStorage.getItem('lang') === "pt")
-			? "Senha muita fraca" 
-			: "Very weak password";
-			throw new Error(message_error_password);
-	}
+	// if (!password_valid) {
+	// 	let message_error_password = (localStorage.getItem('lang') === "pt")
+	// 		? "Senha muita fraca" 
+	// 		: "Very weak password";
+	// 		throw new Error(message_error_password);
+	// }
 }
 
 function redirectsToLogin() {

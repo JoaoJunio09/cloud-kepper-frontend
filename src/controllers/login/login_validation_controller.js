@@ -1,4 +1,4 @@
-import { UserService } from "../../services/user_service.js";
+import { UserService } from "../../services/person_service.js";
 import { closeMessageError, openMessageError } from "../../utils/message_error.js";
 import { openMessageSuccess } from "../../utils/message_success.js";
 
@@ -26,7 +26,7 @@ async function login() {
 		// 	}
 		// });
 
-		setIdFromUserForStorage(38);
+		setIdFromUserForStorage(2);
 		displaySucessMessage("Login realizado");
 	}
 	catch (error) {
