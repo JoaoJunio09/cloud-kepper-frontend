@@ -1,3 +1,4 @@
+import { AuthService } from "../../services/auth_service.js";
 import { UserService } from "../../services/person_service.js";
 import { closeMessageError, openMessageError } from "../../utils/message_error.js";
 import { openMessageSuccess } from "../../utils/message_success.js";
@@ -12,7 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
 async function login() {
 	let id = null;
 
-	const email = document.querySelector("#email").value;
+	// --- IMPORTANTE ---
+	//
+	// TROCAR O EMAIL PELO USERNAME, O LOGIN SERÁ REALIZADO PELO USERNAME E PASSWORD, NÃO MAIS O EMAIL.
+	//	
+
+
+	const userna = document.querySelector("#email").value;
 	const password = document.querySelector("#password").value;
 
 	try {
@@ -27,6 +34,7 @@ async function login() {
 		// });
 
 		setIdFromUserForStorage(2);
+		AuthService.signIn(username, password)
 		displaySucessMessage("Login realizado");
 	}
 	catch (error) {
